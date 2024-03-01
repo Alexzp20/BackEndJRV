@@ -29,7 +29,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
+        //'password',
         'remember_token',
     ];
 
@@ -42,4 +42,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function rol(){
+        return $this->belongsTo('App\Models\Rol');
+    }
+    public function puesto(){
+        return $this->belongsTo('App\Models\Puesto');
+    }
+
 }
