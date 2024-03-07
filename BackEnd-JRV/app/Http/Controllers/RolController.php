@@ -32,6 +32,9 @@ class RolController extends Controller
     public function store(Request $request)
     {
         //
+        $rol = new Rol();
+        $rol->ROL =$request->ROL;
+        $rol->save();        
     }
 
     /**
@@ -53,16 +56,22 @@ class RolController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
         //
+        $rol = Rol::findOrFail($request->id);
+        $rol->ROL = $request->ROL;
+        $rol->save();
+        return $rol;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
         //
+        $rol = Rol::destroy($request->id);
+        return $rol;
     }
 }

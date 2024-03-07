@@ -23,12 +23,21 @@ class UserController extends Controller
 
     }
 
+    public function puesto(Request $request){
+
+        $puesto = $request->query('puesto_id');
+
+        $users = User::where('puesto_id',$puesto)->get();
+        return response()->json($users);
+    }
+
     public function store(Request $request){
         $user = new User();
+        $user->username = $request->username;
         $user->name = $request->name;
+        $user->apellido = $request->apellido;
         $user->email = $request->email;
         $user->password = $request->password;
-        $user->cv = $request->cv;
         $user->fecha_nacimiento = $request->fecha_nacimiento;
         $user->carnet = $request->carnet;
         $user->puesto_id = $request->puesto_id;
@@ -40,10 +49,11 @@ class UserController extends Controller
     public function update(Request $request){
 
         $user = User::findOrFail($request->id);
+        $user->username = $request->username;
         $user->name = $request->name;
+        $user->apellido = $request->apellido;
         $user->email = $request->email;
         $user->password = $request->pasword;
-        $user->cv = $request->cv;
         $user->fecha_nacimiento = $request->fecha_nacimiento;
         $user->carnet = $request->carnet;
         $user->puesto_id = $request->puesto_id;
