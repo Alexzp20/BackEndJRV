@@ -20,11 +20,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/users','App\Http\Controllers\UserController@index');//mostrar todos los usuarios
+Route::get('/users/puesto',[UserController::class,'puesto']);
 Route::get('/user/{id}','App\Http\Controllers\UserController@show');
 Route::post('/users','App\Http\Controllers\UserController@store');//crear usuario
 Route::put('/users/{id}','App\Http\Controllers\UserController@update');//actualizar el registro
 Route::delete('/users/{id}','App\Http\Controllers\UserController@destroy');//mostrar todos los usuarios
-Route::get('/users',[UserController::class,'puesto']);
+
+
 
 
 Route::get('/puestos','App\Http\Controllers\PuestoController@index');
