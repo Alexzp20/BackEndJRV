@@ -24,10 +24,11 @@ Route::get('/users/puesto',[UserController::class,'puesto']);
 Route::get('/user/{id}','App\Http\Controllers\UserController@show');
 Route::post('/users','App\Http\Controllers\UserController@store');//crear usuario
 Route::put('/users/{id}','App\Http\Controllers\UserController@update');//actualizar el registro
-Route::delete('/users/{id}','App\Http\Controllers\UserController@destroy');//mostrar todos los usuarios
+Route::delete('/user/{id}','App\Http\Controllers\UserController@destroy');//mostrar todos los usuarios
 
-
-
+Route::post('/categoria','App\Http\Controllers\CategoriaController@store');//crear categoria
+Route::post('/subcategoria','App\Http\Controllers\SubcategoriaController@store');//crear subcategoria
+Route::post('/solicitud','App\Http\Controllers\SolicitudController@store');//crear solicitud
 
 Route::get('/puestos','App\Http\Controllers\PuestoController@index');
 
