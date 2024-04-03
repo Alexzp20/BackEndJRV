@@ -19,6 +19,13 @@ class SubcategoriaController extends Controller
         return $subcategoria;
     }
 
+    public function categoria(Request $request)
+    {
+        $categoria = $request->query('categoria_id');
+        $subcategorias = Subcategoria::where('categoria_id',$categoria)->get();
+        return response()->json($subcategorias);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

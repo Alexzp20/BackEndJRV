@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SubcategoriaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,8 +27,11 @@ Route::post('/users','App\Http\Controllers\UserController@store');//crear usuari
 Route::put('/users/{id}','App\Http\Controllers\UserController@update');//actualizar el registro
 Route::delete('/user/{id}','App\Http\Controllers\UserController@destroy');//mostrar todos los usuarios
 
+Route::get('/categoria','App\Http\Controllers\CategoriaController@index');//crear categoria
+
 Route::post('/categoria','App\Http\Controllers\CategoriaController@store');//crear categoria
 Route::post('/subcategoria','App\Http\Controllers\SubcategoriaController@store');//crear subcategoria
+Route::get('/subcategoria/categoria',[SubcategoriaController::class,'categoria']);
 Route::post('/solicitud','App\Http\Controllers\SolicitudController@store');//crear solicitud
 
 Route::get('/puestos','App\Http\Controllers\PuestoController@index');
