@@ -19,6 +19,7 @@ class SolicitudController extends Controller
         return $solicitud;
     }
 
+    //Metodo para la revision de las solicitudes
     public function revision(RevisionSolRequest $request){
 
         $sol = Solicitud::findOrFail($request->id);
@@ -26,9 +27,13 @@ class SolicitudController extends Controller
         $sol->comentario_revision = $request->comentario;
         $sol->save();
 
-        return response()->json($sol,200);
+        $message = $request->estado ? 'Solicitud aprobada' : 'Solicitud denegada';
+
+        return response()->json($message,200);
     }
 
+
+    //Metodo para enviar todas las solicitudes pendientes de revision
     public function indexRevision(){
         
         $solicitudes = Solicitud::with('documentos')->whereNull('estado_revision_id')->get();
