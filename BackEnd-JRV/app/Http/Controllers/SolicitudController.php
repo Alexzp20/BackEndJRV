@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RevisionSolRequest;
 use App\Models\Solicitud;
 use App\Models\DocSolicitud;
 use Illuminate\Http\Request;
@@ -16,6 +17,22 @@ class SolicitudController extends Controller
     {
         $solicitud = Solicitud::all();
         return $solicitud;
+    }
+
+    public function revision(RevisionSolRequest $request){
+
+        $sol = Solicitud::findOrFail($request->id);
+        $sol->estado_revision = $request->estado;
+        $sol->comentario_revision = $request->comentario;
+        $sol->save();
+
+        return response()->json($sol,200);
+    }
+
+    public function indexRevision(){
+        
+        $solicitudes = Solicitud::with('documentos')->whereNull('estado_revision_id')->get();
+        return response()->json($solicitudes);
     }
 
     /**
@@ -37,7 +54,6 @@ class SolicitudController extends Controller
         $solicitud->descripcion = $request->descripcion;
         $solicitud->categoria_id = $request->categoria_id;
         $solicitud->subcategoria_id = $request->subcategoria_id;
-        $solicitud->estado_revision_id = $request->estado_revision_id;
         $solicitud->save();
 
         $request->file->storeAs('solicitudes',$fileName);

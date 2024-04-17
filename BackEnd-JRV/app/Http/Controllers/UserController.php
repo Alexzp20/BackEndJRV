@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -31,7 +32,8 @@ class UserController extends Controller
         return response()->json($users);
     }
 
-    public function store(Request $request){
+    public function store(StoreUserRequest $request){
+        
         $user = new User();
         $user->username = $request->username;
         $user->name = $request->name;
@@ -44,9 +46,11 @@ class UserController extends Controller
         $user->rol_id = $request->rol_id;
 
         $user->save();
+
+        return response()->json(['user'=>$user],201);
     }
 
-    public function update(Request $request){
+    public function update(StoreUserRequest $request){
 
         $user = User::findOrFail($request->id);
         $user->username = $request->username;

@@ -9,4 +9,10 @@ class DocSolicitud extends Model
 {
     protected $table = 'doc_solicitudes';
     use HasFactory;
+
+    public function solicitud (){
+        return $this->belongsTo(Solicitud::class);
+    }
 }
+
+

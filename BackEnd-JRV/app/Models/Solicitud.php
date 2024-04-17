@@ -16,4 +16,8 @@ class Solicitud extends Model
     public function subcategoria (){
         return $this->belongsTo('App\Models\subcategoria');
     }
+
+    public function documentos (){
+        return $this->hasMany(DocSolicitud::class);
+    }
 }

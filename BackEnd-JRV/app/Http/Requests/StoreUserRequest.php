@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+
+class StoreUserRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            //
+            'username'=>'required',
+            'name'=>'required',
+            'email'=>'required|email|unique:users,email',
+            'password'=>'required|confirmed',
+            'fecha_nacimiento'=>'date'
+            
+        ];
+    }
+
+    public function messages(){
+        return[
+            'username.required' => 'Ingrese un username',
+            'name.required' => 'Ingrese un nombre de usuario',
+            'email.required' => 'Ingrese un correo electronico',
+            'email.email' => 'Ingrese un correo electronico valido',
+            'email.unique' => 'El correo electronico ya existe',
+            'password.required' => 'Ingrese una contraseña',
+            'password.confirmed' => 'Contraseña equivocada',
+            'fecha_nacimiento.date' => 'Ingrese una fecha valida',
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json($validator->errors(), 422));
+    }
+
+
+}
