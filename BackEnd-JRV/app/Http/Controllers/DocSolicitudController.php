@@ -13,7 +13,7 @@ class DocSolicitudController extends Controller
 
         $doc = DocSolicitud::findOrFail($id);
 
-        $ruta = storage_path('app/solicitudes/' . $doc->path);
+        $ruta = storage_path($doc->path);
 
         if(file_exists($ruta)){
             return response()->download($ruta,$doc->name);

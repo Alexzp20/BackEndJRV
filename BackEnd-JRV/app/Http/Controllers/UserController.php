@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -43,9 +44,11 @@ class UserController extends Controller
         $user->fecha_nacimiento = $request->fecha_nacimiento;
         $user->carnet = $request->carnet;
         $user->puesto_id = $request->puesto_id;
-        $user->rol_id = $request->rol_id;
 
         $user->save();
+
+        $role = Role::findOrFail($request->role_id);
+        $user->assignRole($role);
 
         return response()->json(['user'=>$user],201);
     }
@@ -61,7 +64,7 @@ class UserController extends Controller
         $user->fecha_nacimiento = $request->fecha_nacimiento;
         $user->carnet = $request->carnet;
         $user->puesto_id = $request->puesto_id;
-        $user->rol_id = $request->rol_id;
+        
 
         $user->save();
         return $user;

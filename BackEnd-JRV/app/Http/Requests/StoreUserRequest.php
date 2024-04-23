@@ -29,8 +29,8 @@ class StoreUserRequest extends FormRequest
             'name'=>'required',
             'email'=>'required|email|unique:users,email',
             'password'=>'required|confirmed',
-            'fecha_nacimiento'=>'date'
-            
+            'fecha_nacimiento'=>'date',
+            'role_id'=>'exists:roles,id'
         ];
     }
 
@@ -44,6 +44,7 @@ class StoreUserRequest extends FormRequest
             'password.required' => 'Ingrese una contraseña',
             'password.confirmed' => 'Contraseña equivocada',
             'fecha_nacimiento.date' => 'Ingrese una fecha valida',
+            'role_id.exists'=>'Seleccione un rol valido'
         ];
     }
 

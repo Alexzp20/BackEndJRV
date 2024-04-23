@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RevisionSolRequest;
+use App\Http\Requests\StoreSolicitudRequest;
 use App\Models\Solicitud;
 use App\Models\DocSolicitud;
 use Illuminate\Http\Request;
@@ -51,7 +52,7 @@ class SolicitudController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreSolicitudRequest $request)
     {
         $fileName = time().'.'.$request->file->extension();
         //
@@ -64,7 +65,7 @@ class SolicitudController extends Controller
         $request->file->storeAs('solicitudes',$fileName);
         $doc = new DocSolicitud;
         $doc->name = $request->name;
-        $doc->path = $fileName;
+        $doc->path = 'app/solicitudes/' .$fileName;
         $doc->solicitud_id = $solicitud->id;
         $doc->save();
 

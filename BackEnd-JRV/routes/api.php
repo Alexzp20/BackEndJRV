@@ -39,11 +39,13 @@ Route::post('/categoria','App\Http\Controllers\CategoriaController@store');//cre
 Route::post('/subcategoria','App\Http\Controllers\SubcategoriaController@store');//crear subcategoria
 Route::get('/subcategoria/categoria',[SubcategoriaController::class,'categoria']);
 
+
 Route::post('/solicitud','App\Http\Controllers\SolicitudController@store');//crear solicitud
 Route::get('/solicitudes/rev','App\Http\Controllers\SolicitudController@indexRevision');
 Route::put('/revision','App\Http\Controllers\SolicitudController@revision');
 
 Route::get('/solicitud/doc/{id}','App\Http\Controllers\DocSolicitudController@descargar');
+
 
 Route::get('/puestos','App\Http\Controllers\PuestoController@index');
 
