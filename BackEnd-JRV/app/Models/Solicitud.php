@@ -20,4 +20,8 @@ class Solicitud extends Model
     public function documentos (){
         return $this->hasMany(DocSolicitud::class);
     }
+
+    public function estado (){
+        return $this->belongsTo(Estado::class);
+    }
 }

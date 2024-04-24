@@ -26,8 +26,8 @@ class RevisionSolRequest extends FormRequest
         return [
             //
             'id'=>'exists:solicitudes|required',
-            'estado'=>'boolean|required',
-            'comentario'=>'required_if:estado,false'
+            'estado'=>'in:2,3|required',
+            'comentario'=>'required_if:estado,3'
         ];
     }
 
@@ -36,7 +36,7 @@ class RevisionSolRequest extends FormRequest
         return[
             'id.exists' => 'La solicitud no existe',
             'id.required' => 'Debe de ingresar una solicitud',
-            'estado.boolean' => 'Ingrese un estado valido',
+            'estado.in' => 'Ingrese un estado valido',
             'estado.required' => 'Debe ingresar el estado',
             'comentario.required_if' => 'Ingrese un comentario'
         ];
