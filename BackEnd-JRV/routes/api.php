@@ -33,7 +33,7 @@ Route::delete('/user/{id}','App\Http\Controllers\UserController@destroy');//most
 
 
 
-Route::get('/categoria','App\Http\Controllers\CategoriaController@index');//crear categoria
+Route::get('/categorias','App\Http\Controllers\CategoriaController@index');//crear categoria
 
 Route::post('/categoria','App\Http\Controllers\CategoriaController@store');//crear categoria
 Route::post('/subcategoria','App\Http\Controllers\SubcategoriaController@store');//crear subcategoria
