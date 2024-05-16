@@ -24,4 +24,10 @@ class Solicitud extends Model
     public function estado (){
         return $this->belongsTo(Estado::class);
     }
+
+    //Relacion muchos a muchos con agenda
+
+    public function agendas(){
+        return $this->belongsToMany(Agenda::class);
+    }
 }

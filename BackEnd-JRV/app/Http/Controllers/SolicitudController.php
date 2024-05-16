@@ -34,10 +34,10 @@ class SolicitudController extends Controller
     }
 
 
-    //Metodo para enviar todas las solicitudes pendientes de revision
-    public function indexRevision(){
+    //Metodo para enviar todas las solicitudes por su estado
+    public function indexEstado(Request $request){
         
-        $solicitudes = Solicitud::with('documentos')->where('estado_id',1)->get();
+        $solicitudes = Solicitud::with('documentos','categoria')->where('estado_id', $request->id)->get();
         return response()->json($solicitudes);
     }
 
