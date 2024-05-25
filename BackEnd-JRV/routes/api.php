@@ -39,12 +39,17 @@ Route::post('/categoria','App\Http\Controllers\CategoriaController@store');//cre
 Route::post('/subcategoria','App\Http\Controllers\SubcategoriaController@store');//crear subcategoria
 Route::get('/subcategoria/categoria',[SubcategoriaController::class,'categoria']);
 
+
 //Endpoints para solicitudes
+Route::get('/solicitudes','App\Http\Controllers\SolicitudController@index');
 Route::post('/solicitud','App\Http\Controllers\SolicitudController@store');//crear solicitud
 Route::get('/solicitudes/estado/{id}','App\Http\Controllers\SolicitudController@indexEstado');//mostrar las solicitudes por su estado
-Route::put('/revision','App\Http\Controllers\SolicitudController@revision');
+Route::put('/revision','App\Http\Controllers\SolicitudController@revision');//Revisar solicitud
 Route::get('/solicitud/doc/{id}','App\Http\Controllers\DocSolicitudController@descargar');
 
+//Endpoints para agenda
+Route::post('/agenda','App\Http\Controllers\AgendaController@store');
+Route::get('/agenda/{id}','App\Http\Controllers\AgendaController@show');
 
 
 

@@ -16,8 +16,20 @@ class SolicitudController extends Controller
      */
     public function index()
     {
-        $solicitud = Solicitud::all();
-        return $solicitud;
+
+        $solicitudes = Solicitud::with('categoria','subcategoria','estado')->get();
+
+        return response()->json($solicitudes->map(function($solicitud){
+            return[
+                'id'=> $solicitud->id,
+                'codigo'=>$solicitud->codigo,
+                'descripcion'=>$solicitud->descripcion,
+                'categoria'=>$solicitud->categoria->name,
+                'subcategoria'=>$solicitud->subcategoria ? $solicitud->subcategoria->name :null,
+                'estado'=>$solicitud->estado->name,
+                'creado'=>$solicitud->created_at
+            ];
+        }));
     }
 
     //Metodo para la revision de las solicitudes
@@ -57,6 +69,7 @@ class SolicitudController extends Controller
         $fileName = time().'.'.$request->file->extension();
         //
         $solicitud = new Solicitud();
+        $solicitud->codigo = $request->name;
         $solicitud->descripcion = $request->descripcion;
         $solicitud->categoria_id = $request->categoria_id;
         $solicitud->subcategoria_id = $request->subcategoria_id;

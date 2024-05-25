@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('solicitud_agenda', function (Blueprint $table) {
+        Schema::create('agenda_solicitud', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('solicitud_id');
             $table->unsignedBigInteger('agenda_id');
-            $table->timestamps();
 
             $table->foreign('solicitud_id')->references('id')->on('solicitudes')->onDelete('cascade');
             $table->foreign('agenda_id')->references('id')->on('agendas')->onDelete('cascade');;
+            $table->timestamps();
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('solicitud_agenda');
+        Schema::dropIfExists('agenda_solicitud');
     }
 };

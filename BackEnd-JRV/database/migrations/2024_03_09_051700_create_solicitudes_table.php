@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('solicitudes', function (Blueprint $table) {
             $table->id();
+            $table->string('codigo');
             $table->string('descripcion');
             $table->unsignedBigInteger('categoria_id')->nullable();
             $table->unsignedBigInteger('subcategoria_id')->nullable();
