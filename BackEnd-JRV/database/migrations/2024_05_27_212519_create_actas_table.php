@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('puestos', function (Blueprint $table) {
+        Schema::create('actas', function (Blueprint $table) {
             $table->id();
-            $table->char('name', 50)->nullable();
+            $table->string('codigo');
+            $table->string('path');
+            $table->unsignedBigInteger('agenda_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('agenda_id')->references('id')->on('agendas')->onDelete('set null');
         });
     }
 
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('puestos');
+        Schema::dropIfExists('actas');
     }
 };

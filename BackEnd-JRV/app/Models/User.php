@@ -50,8 +50,14 @@ class User extends Authenticatable
         //return $this->belongsTo('App\Models\Rol');
     //}
     
+
     public function puesto(){
         return $this->belongsTo('App\Models\Puesto');
+    }
+
+    //Relacion de muchos a muchos con la tabla agendas
+    public function agendas(){
+        return $this->belongsToMany(Agenda::class)->withPivot('asistencia','quarum','tipo_asistente','hora');
     }
 
 }

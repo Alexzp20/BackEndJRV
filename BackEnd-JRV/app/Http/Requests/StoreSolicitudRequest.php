@@ -26,7 +26,7 @@ class StoreSolicitudRequest extends FormRequest
             //
             'descripcion'=>'required',
             'categoria_id'=>'exists:categorias,id',
-            'subcategoria_id'=>'exists:subcategorias,id',
+            'subcategoria_id'=>'nullable|exists:subcategorias,id',
             'name'=>'required',
             'file'=>'required|extensions:pdf'
         ];

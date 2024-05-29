@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAgendaRequest;
+use App\Models\Acta;
 use Illuminate\Http\Request;
 use App\Models\Agenda;
+use Hamcrest\Type\IsNumeric;
 
 class AgendaController extends Controller
 {
@@ -15,51 +18,134 @@ class AgendaController extends Controller
         return response()->json($agenda);
     }
 
-    public function store(Request $request){
+    public function store(StoreAgendaRequest $request){
 
-        $agenda = new Agenda();
-        $agenda->numero = $request->numero;
-        $agenda->convoca = $request->convoca;
-        $agenda->fecha = $request->fecha;
-        $agenda->lugar = $request->lugar;
-        $agenda->primera_convocatoria = $request->primera_convocatoria;
-        $agenda->segunda_convocatoria = $request->segunda_convocatoria;
-        $agenda->hora_inicio = $request->hora_inicio;
-        $agenda->hora_finalizacion = $request->hora_finalizacion;
+        //Creacion de una nueva agenda
+        $agenda = Agenda::create([
+            'numero' => $request['generales']['numAgenda'],
+            'convoca' => $request['generales']['convoca'],
+            'fecha'=>$request['generales']['fechaAgenda'],
+            'lugar'=>$request['generales']['lugar'],
+            'primera_convocatoria'=>$request['generales']['primeraConvocatoria'],
+            'segunda_convocatoria'=>$request['generales']['segundaConvocatoria'],
+            'hora_inicio'=>$request['generales']['horaInicio'],
+            'hora_finalizacion'=>$request['generales']['horaFin']
 
-        $agenda->save();
+        ]);
+        
+        //Relacionar las solicitudes con la agenda
+        $solicitudes = $request->input('solicitudes');
+        $solicitudesArray = $this->conversionSolicitudes($solicitudes);
+        foreach($solicitudesArray as $solicitud){
+            $agenda->solicitudes()->attach($solicitud['id']);
+        }
+        
+        //Relaciona a las usuarios con la agenda (asistencia)
+        $asistencias = $request['asistencias'];
+        $asistenciasArray =$this->conversionSolicitudes($asistencias);
+        foreach($asistenciasArray as $asistencia){
+            $agenda->users()->attach($asistencia['usuarioAsistente'],[
+                'asistencia'=> $asistencia['asistencia'],
+                'quarum'=> $asistencia['quorum'],
+                'tipo_asistente'=> $asistencia['tipoAsistente'],
+                'hora'=> $asistencia['horaAsistencia']
+            ]);
 
-        $solicitudes = $request->solicitudes;
-        $agenda->solicitudes()->attach($solicitudes);
+        }
+
+        //Agregar actas
+        $actas = $request['actas'];
+        foreach($actas as $acta){
+            $this->crearActa($acta, $agenda->id);
+        }
 
         return response()->json($agenda,201);
 
     }
 
-    public function show(Request $request){
 
-        //$agenda = Agenda::with('solicitudes')->where('id', $request->id)->get();
-        
+    //funcion para crear acta
+    private function crearActa($acta, $agenda){
 
-        $agenda = Agenda::findOrFail($request->id);
+        $fileName = $acta->codigoActa.time().'.'.$acta->documentoActa->extension();
+        $acta->documentoActa->storeAs('actas',$fileName);
 
-        $solicitudes = $agenda->solicitudes;
+        $act = new Acta;
+        $act->codigo = $acta->codigoActa;
+        $act->path = 'app/actas/'.$fileName;
+        $act->agenda_id = $agenda;
+        $act->save();
 
-        $solicitudesAgrupadas = $solicitudes->groupBy(function ($solicitud) {
-            return $solicitud->categoria . '_' . $solicitud->subcategoria;
-        });
+    }
 
-        //$solicitudesArray = $solicitudesAgrupadas->map(function($solicitudes){
-            //return $solicitudes->toArray();
-        //})->toArray();
 
-        $solicitudesArray = [];
-        foreach ($solicitudesAgrupadas as $key => $solicitudes){
-            list($categoria,$subcategoria) = explode('_',$key);
-            $solicitudesArray[$categoria][$subcategoria][] = $solicitudes->toArray();
+
+    //funcion para convertir el array todo loco que manda pedro en un array normal de solicitudes
+    private function conversionSolicitudes($solicitudes)
+    {
+        $arrayPlano = [];
+
+        foreach ($solicitudes as $items) {
+            if (is_array($items)) {
+                foreach ($items as $key => $subitems) {
+                    if (is_array($subitems) && is_numeric($key)) {
+                        $arrayPlano = array_merge($arrayPlano, [$subitems]);
+                    } else {
+                        foreach ($subitems as $solicitudesArray){
+                            $arrayPlano = array_merge($arrayPlano, [$solicitudesArray]);
+                        }
+                    }
+                }
+            }
         }
 
-        return response()->json(['solicitudes' => $solicitudesArray]);
+        return $arrayPlano;
+    }
+
+
+    public function show(Request $request){
+        
+        //Encuentra la agenda con toda la informacion de las solicitudes
+        $agenda = Agenda::with([
+            'solicitudes.documentos',
+            'solicitudes.categoria',
+            'solicitudes.subcategoria'
+        ])->findOrFail($request->id);
+
+        //Da el formato neesario a los arrays de cada solicitud
+        $solicitudes = $agenda->solicitudes->map(function($solicitud){
+            return [
+                'id'=> $solicitud->id,
+                'codigo'=>$solicitud->codigo,
+                'descripcion'=>$solicitud->descripcion,
+                'categoria'=>$solicitud->categoria->name,
+                'subcategoria'=>$solicitud->subcategoria ? $solicitud->subcategoria->name :null,
+                'estado'=>$solicitud->estado->name,
+                'documentos' => $solicitud->documentos->map(function($documento) {
+                    return [
+                        'id' => $documento->id,
+                        'path' => $documento->titulo,
+                    ];
+                }),
+                'creado'=>$solicitud->created_at
+            ];
+        });
+
+        //Agrupa las solicitudes por categorias y subcategorias
+        $solicitudesAnidadas = $solicitudes->groupBy(function($solicitud) {
+            return $solicitud['categoria'];
+        })->map(function($categoriaGrupo) {
+            $subcategoriaGrupo = $categoriaGrupo->groupBy(function($solicitud) {
+                return $solicitud['subcategoria'] ?? 'sin subcategoria';
+            });
+            if($subcategoriaGrupo->has('sin subcategoria')){
+                return $subcategoriaGrupo->get('sin subcategoria');
+            }
+            return $subcategoriaGrupo;
+        }); 
+
+
+        return response()->json($solicitudesAnidadas);
     }
 
 

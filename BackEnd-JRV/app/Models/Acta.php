@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Puesto extends Model
+class Acta extends Model
 {
     use HasFactory;
-    protected $fillable = ['name'];
 
-    public function users(){
-        return $this->hasMany('App\Models\user');
+    public function agenda(){
+        return $this->belongsTo(Agenda::class);
     }
 }

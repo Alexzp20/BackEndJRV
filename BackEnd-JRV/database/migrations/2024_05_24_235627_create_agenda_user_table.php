@@ -13,7 +13,18 @@ return new class extends Migration
     {
         Schema::create('agenda_user', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('agenda_id');
+            $table->boolean('asistencia');
+            $table->boolean('quarum');
+            $table->integer('tipo_asistente');
+            $table->time('hora');
             $table->timestamps();
+
+            $table->foreign('agenda_id')->references('id')->on('agendas')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+
         });
     }
 

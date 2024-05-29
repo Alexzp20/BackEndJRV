@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('agenda_id');
 
             $table->foreign('solicitud_id')->references('id')->on('solicitudes')->onDelete('cascade');
-            $table->foreign('agenda_id')->references('id')->on('agendas')->onDelete('cascade');;
+            $table->foreign('agenda_id')->references('id')->on('agendas')->onDelete('cascade');
             $table->timestamps();
         });
     }

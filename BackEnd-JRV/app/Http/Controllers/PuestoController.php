@@ -19,7 +19,7 @@ class PuestoController extends Controller
     {
         //
         $puesto = new Puesto();
-        $puesto->PUESTO =$request->PUESTO;
+        $puesto->name =$request->PUESTO;
         $puesto->save();        
     }
 
@@ -27,7 +27,7 @@ class PuestoController extends Controller
     {
         //
         $puesto = Puesto::findOrFail($request->id);
-        $puesto->PUESTO = $request->PUESTO;
+        $puesto->name = $request->PUESTO;
         $puesto->save();
         return $puesto;
     }
