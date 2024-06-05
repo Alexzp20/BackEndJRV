@@ -25,6 +25,10 @@ class Solicitud extends Model
         return $this->belongsTo(Estado::class);
     }
 
+    public function profile(){
+        return $this->hasOne(Votacion::class);
+    }
+
     //Relacion muchos a muchos con agenda
 
     public function agendas(){

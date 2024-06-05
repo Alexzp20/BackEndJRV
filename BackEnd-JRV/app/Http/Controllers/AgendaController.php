@@ -7,6 +7,7 @@ use App\Http\Requests\StoreAgendaRequest;
 use App\Models\Acta;
 use Illuminate\Http\Request;
 use App\Models\Agenda;
+use App\Models\Informe;
 use Hamcrest\Type\IsNumeric;
 
 class AgendaController extends Controller
@@ -40,7 +41,7 @@ class AgendaController extends Controller
             $agenda->solicitudes()->attach($solicitud['id']);
         }
         
-        //Relaciona a las usuarios con la agenda (asistencia)
+        //Relacionar a los usuarios con la agenda (asistencia)
         $asistencias = $request['asistencias'];
         $asistenciasArray =$this->conversionSolicitudes($asistencias);
         foreach($asistenciasArray as $asistencia){
@@ -50,7 +51,6 @@ class AgendaController extends Controller
                 'tipo_asistente'=> $asistencia['tipoAsistente'],
                 'hora'=> $asistencia['horaAsistencia']
             ]);
-
         }
 
         //Agregar actas
@@ -58,7 +58,13 @@ class AgendaController extends Controller
         foreach($actas as $acta){
             $this->crearActa($acta, $agenda->id);
         }
-
+        
+        $informes = $request['informes'];
+        foreach($informes as $informe){
+            $this->crearInforme($informe, $agenda->id);
+        }
+        
+        
         return response()->json($agenda,201);
 
     }
@@ -75,9 +81,19 @@ class AgendaController extends Controller
         $act->path = 'app/actas/'.$fileName;
         $act->agenda_id = $agenda;
         $act->save();
-
     }
 
+    private function crearInforme($info, $agenda){
+        
+        $fileName = $info->codigoInforme.time().'.'.$info->documentoInforme->extension();
+        $info->documentoInforme->storeAs('informes',$fileName);
+
+        $informe = new Informe;
+        $informe->codigo = $info->codigoInforme;
+        $informe->path = 'app/informes'.$fileName;
+        $informe->agenda_id = $agenda;
+        $informe->save();
+    }
 
 
     //funcion para convertir el array todo loco que manda pedro en un array normal de solicitudes
@@ -144,7 +160,7 @@ class AgendaController extends Controller
             return $subcategoriaGrupo;
         }); 
 
-
+ 
         return response()->json($solicitudesAnidadas);
     }
 
