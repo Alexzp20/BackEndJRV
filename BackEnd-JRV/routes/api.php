@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ActaController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SubcategoriaController;
 use Illuminate\Http\Request;
@@ -20,6 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/login',[AuthController::class,'login']);
+
 
 //crud usuarios
 Route::get('/users','App\Http\Controllers\UserController@index');//mostrar todos los usuarios
@@ -30,7 +34,11 @@ Route::put('/users/{id}','App\Http\Controllers\UserController@update');//actuali
 Route::delete('/user/{id}','App\Http\Controllers\UserController@destroy');//mostrar todos los usuarios
 //
 
-
+//crud actas
+Route::post('acta',[ActaController::class,'create']);
+Route::post('acta/{id}',[ActaController::class,'update']);
+Route::delete('acta/{id}',[ActaController::class,'destroy']);
+Route::get('actas',[ActaController::class,'index']);
 
 
 Route::get('/categorias','App\Http\Controllers\CategoriaController@index');//crear categoria

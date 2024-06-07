@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -40,7 +41,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->apellido = $request->apellido;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = Hash::make($request->password);
         $user->fecha_nacimiento = $request->fecha_nacimiento;
         $user->carnet = $request->carnet;
         $user->puesto_id = $request->puesto_id;

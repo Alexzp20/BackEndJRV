@@ -164,5 +164,4 @@ class AgendaController extends Controller
         return response()->json($solicitudesAnidadas);
     }
 
-
 }
