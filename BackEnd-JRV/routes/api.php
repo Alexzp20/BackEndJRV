@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActaController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\InformeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SubcategoriaController;
 use Illuminate\Http\Request;
@@ -39,7 +40,16 @@ Route::post('acta',[ActaController::class,'create']);
 Route::post('acta/{id}',[ActaController::class,'update']);
 Route::delete('acta/{id}',[ActaController::class,'destroy']);
 Route::get('actas',[ActaController::class,'index']);
+Route::get('actasAgenda',[ActaController::class,'actasAsignacion']);
+//
 
+//crud informes
+Route::post('informe',[InformeController::class,'create']);
+Route::post('informe/{id}',[InformeController::class,'update']);
+Route::delete('informe/{id}',[InformeController::class,'destroy']);
+Route::get('informesAgenda',[InformeController::class,'informeAsignar']);
+Route::get('informes',[InformeController::class, 'index']);
+//
 
 Route::get('/categorias','App\Http\Controllers\CategoriaController@index');//crear categoria
 

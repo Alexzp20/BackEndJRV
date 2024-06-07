@@ -15,6 +15,11 @@ class ActaController extends Controller
         return $actas;
     }
 
+    public function actasAsignacion(){
+        $actas = Acta::where('agenda_id',null)->get();
+        return response()->json($actas);
+    }
+
     public function create(CreateActaRequest $request){
         
         $fileName = $request->codigoActa.time().'.'.$request->documentoActa->extension();
@@ -37,6 +42,7 @@ class ActaController extends Controller
         $acta->codigo = $request->codigoActa;
         $acta->path = 'app/actas/'.$fileName;
         $acta->save();
+
     }
 
     public function destroy(Request $request){

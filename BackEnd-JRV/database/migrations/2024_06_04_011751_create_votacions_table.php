@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->integer('afavor');
             $table->integer('contra');
-            $table->interger('abstencion');
-            $table->interger('total');
+            $table->integer('abstencion');
+            $table->integer('total');
             $table->unsignedBigInteger('solicitud_id');
             $table->timestamps();
 
