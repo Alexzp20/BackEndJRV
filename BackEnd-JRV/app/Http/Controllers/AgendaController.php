@@ -43,8 +43,8 @@ class AgendaController extends Controller
         
         //Relacionar a los usuarios con la agenda (asistencia)
         $asistencias = $request['asistencias'];
-        $asistenciasArray =$this->conversionSolicitudes($asistencias);
-        foreach($asistenciasArray as $asistencia){
+        //$asistenciasArray =$this->$asistencias;
+        foreach($asistencias as $asistencia){
             $agenda->users()->attach($asistencia['usuarioAsistente'],[
                 'asistencia'=> $asistencia['asistencia'],
                 'quarum'=> $asistencia['quorum'],
@@ -56,44 +56,21 @@ class AgendaController extends Controller
         //Agregar actas
         $actas = $request['actas'];
         foreach($actas as $acta){
-            $this->crearActa($acta, $agenda->id);
+            $act = Acta::find($acta['id']);
+            $act->agenda_id = $agenda->id;
+            $act->save();
         }
-        
+
         $informes = $request['informes'];
         foreach($informes as $informe){
-            $this->crearInforme($informe, $agenda->id);
+            $info = Informe::find($informe['id']);
+            $info->agenda_id = $agenda->id;
+            $info->save();
         }
         
-        
         return response()->json($agenda,201);
-
     }
 
-
-    //funcion para crear acta
-    private function crearActa($acta, $agenda){
-
-        $fileName = $acta->codigoActa.time().'.'.$acta->documentoActa->extension();
-        $acta->documentoActa->storeAs('actas',$fileName);
-
-        $act = new Acta;
-        $act->codigo = $acta->codigoActa;
-        $act->path = 'app/actas/'.$fileName;
-        $act->agenda_id = $agenda;
-        $act->save();
-    }
-
-    private function crearInforme($info, $agenda){
-        
-        $fileName = $info->codigoInforme.time().'.'.$info->documentoInforme->extension();
-        $info->documentoInforme->storeAs('informes',$fileName);
-
-        $informe = new Informe;
-        $informe->codigo = $info->codigoInforme;
-        $informe->path = 'app/informes'.$fileName;
-        $informe->agenda_id = $agenda;
-        $informe->save();
-    }
 
 
     //funcion para convertir el array todo loco que manda pedro en un array normal de solicitudes
