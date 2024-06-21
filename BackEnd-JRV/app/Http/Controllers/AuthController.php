@@ -17,11 +17,18 @@ class AuthController extends Controller
 
         if (Auth::attempt($request->only('email','password'))){
             $user = User::where('email',$request['email'])->firstOrFail();
-            $token = $user->createToken('token')->plainTextToken;
+            $token = $user->createToken('auth_token')->plainTextToken;
 
             return response(["token"=>$token], 200);
         } else {
             return response('No se pudo logear', 401);
         }
     }
-}
+
+    public function logout(){
+        
+        auth()->user()->tokens()->delete();
+        return response()->json(['message' => 'Sesión cerrada'], 200);   
+
+        }
+    }

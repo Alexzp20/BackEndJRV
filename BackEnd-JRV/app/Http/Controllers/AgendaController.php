@@ -97,13 +97,30 @@ class AgendaController extends Controller
 
 
     public function show(Request $request){
+        //Busca los datos generales de la agenda
+        $generales = Agenda::findOrFail($request->id);
         
         //Encuentra la agenda con toda la informacion de las solicitudes
         $agenda = Agenda::with([
             'solicitudes.documentos',
             'solicitudes.categoria',
-            'solicitudes.subcategoria'
+            'solicitudes.subcategoria',
+            'actas',
+            'informes',
+            'users'
         ])->findOrFail($request->id);
+
+        //Array de las actas de la agenda
+        $actas = $agenda->actas;
+
+        //Array de los informes de la agenda
+        $informes = $agenda->informes;
+
+        //Array de las asistencias de la agenda
+        $asistencias = $agenda->users->map(function($user){
+           return $user->pivot;
+        });
+
 
         //Da el formato neesario a los arrays de cada solicitud
         $solicitudes = $agenda->solicitudes->map(function($solicitud){
@@ -138,7 +155,7 @@ class AgendaController extends Controller
         }); 
 
  
-        return response()->json($solicitudesAnidadas);
+        return response()->json(['generales'=>$generales,'asistencias'=>$asistencias,'actas'=>$actas,'informes'=>$informes, 'solicitudes'=>$solicitudesAnidadas]);
     }
 
 }

@@ -14,6 +14,12 @@ class SolicitudController extends Controller
     /**
      * Display a listing of the resource.
      */
+    function __construct()
+    {
+        $this->middleware('permission:revisar solicitud',['only'=>['revision']]);
+    }
+
+
     public function index()
     {
 

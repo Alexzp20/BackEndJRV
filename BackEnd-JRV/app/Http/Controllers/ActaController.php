@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateActaRequest;
 use App\Models\Acta;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ActaController extends Controller
 {
@@ -27,7 +29,7 @@ class ActaController extends Controller
 
         $acta = new Acta;
         $acta->codigo = $request->codigoActa;
-        $acta->path = 'app/actas/'.$fileName;
+        $acta->path = 'actas/'.$fileName;
         $acta->save();
 
         return response()->json(['acta'=>$acta],201);
@@ -40,15 +42,39 @@ class ActaController extends Controller
         $request->documentoActa->storeAs('actas',$fileName);
 
         $acta->codigo = $request->codigoActa;
-        $acta->path = 'app/actas/'.$fileName;
+        $acta->path = 'actas/'.$fileName;
         $acta->save();
 
     }
 
     public function destroy(Request $request){
         
-        Acta::destroy($request->id);
-        return response()->json("Acta eliminada");
+        try {
+            $acta = Acta::findOrFail($request->id);
+            $ruta = $acta->path;
+    
+            $acta->delete();
+            if (Storage::exists($ruta)) {
+                Storage::delete($ruta);
+            }
+            return response()->json(['message' => 'Acta eliminada'], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'El acta no existe'], 404);
+        }
+    }
+
+    public function descargar($id) {
+        try {
+            $acta = Acta::findOrFail($id);
+            $ruta = $acta->path;
+            if (Storage::exists($ruta)) {
+                return Storage::download($ruta);
+            } else {
+                return response()->json(['error' => 'El archivo no existe'], 404);
+            }
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'El acta no existe'], 404);
+        }
     }
 
 }

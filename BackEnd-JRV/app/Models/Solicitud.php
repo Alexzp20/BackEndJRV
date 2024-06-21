@@ -21,6 +21,10 @@ class Solicitud extends Model
         return $this->hasMany(DocSolicitud::class);
     }
 
+    public function acuerdos (){
+        return $this->hasMany(Acuerdo::class);
+    }
+
     public function estado (){
         return $this->belongsTo(Estado::class);
     }

@@ -60,4 +60,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Agenda::class)->withPivot('asistencia','quarum','tipo_asistente','hora');
     }
 
+    public function rutas(){
+        return $this->belongsToMany(Ruta::class);
+    }
+
 }
