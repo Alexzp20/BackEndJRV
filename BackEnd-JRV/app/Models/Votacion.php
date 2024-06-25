@@ -9,6 +9,14 @@ class Votacion extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'afavor',
+        'contra',
+        'abstencion',
+        'total',
+        'solicitud_id'
+    ];
+
     public function solicitud(){
         return $this->belongsTo(Solicitud::class);
     }

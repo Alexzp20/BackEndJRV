@@ -31,6 +31,23 @@ class AcuerdoController extends Controller
         return response()->json(['acuerdo'=>$acuerdo]);
     }
 
+    public function update(CreateAcuerdoRequest $request){
+
+        $acuerdo = Acuerdo::findOrFail($request->id);
+        if($request == null){
+
+        }
+        
+        $fileName = $request->codigoAcuerdo.time().'.'.$request->documentoAcuerdo->extension();
+        $request->documentoAcuerdo->storeAs('acuerdos',$fileName);
+
+        $acuerdo->codigo = $request->codigoAcuerdo;
+        $acuerdo->path = 'acuerdos/'.$fileName;
+        $acuerdo->solicitud_id = $request->solicitud;
+        $acuerdo->save();
+        
+    }
+
     public function destroy($id){
 
         try {

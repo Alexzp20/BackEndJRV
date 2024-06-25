@@ -16,10 +16,12 @@ class AuthController extends Controller
         
 
         if (Auth::attempt($request->only('email','password'))){
-            $user = User::where('email',$request['email'])->firstOrFail();
+            $user = User::with('rutas')->where('email',$request['email'])->firstOrFail();
+            $userDatos = User::findOrFail($user->id);
             $token = $user->createToken('auth_token')->plainTextToken;
+            $rutas = $user->rutas;
 
-            return response(["token"=>$token], 200);
+            return response(["token"=>$token, 'rutas'=>$rutas, 'user'=>$userDatos], 200);
         } else {
             return response('No se pudo logear', 401);
         }

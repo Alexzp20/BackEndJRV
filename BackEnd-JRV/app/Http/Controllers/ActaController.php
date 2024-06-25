@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateActaRequest;
+use App\Http\Requests\UpdateActaRequest;
 use App\Models\Acta;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -35,16 +36,20 @@ class ActaController extends Controller
         return response()->json(['acta'=>$acta],201);
     }
 
-    public function update(CreateActaRequest $request){
-        $acta = Acta::findOrFail($request->id);
+    public function update(UpdateActaRequest $request){
         
-        $fileName = $request->codigoActa.time().'.'.$request->documentoActa->extension();
-        $request->documentoActa->storeAs('actas',$fileName);
-
-        $acta->codigo = $request->codigoActa;
-        $acta->path = 'actas/'.$fileName;
-        $acta->save();
-
+        $acta = Acta::findOrFail($request->id);
+        if($request->documentoActa == null){
+            $acta->codigo = $request->codigoActa;
+            $acta->save();
+        } else {
+            Storage::delete($acta->path);
+            $fileName = $request->codigoActa.time().'.'.$request->documentoActa->extension();
+            $request->documentoActa->storeAs('actas',$fileName);
+            $acta->codigo = $request->codigoActa;
+            $acta->path = 'actas/'.$fileName;
+            $acta->save();
+        }
     }
 
     public function destroy(Request $request){

@@ -8,6 +8,8 @@ use App\Models\Acta;
 use Illuminate\Http\Request;
 use App\Models\Agenda;
 use App\Models\Informe;
+use App\Models\Solicitud;
+use App\Models\Votacion;
 use Hamcrest\Type\IsNumeric;
 
 class AgendaController extends Controller
@@ -40,6 +42,26 @@ class AgendaController extends Controller
         foreach($solicitudesArray as $solicitud){
             $agenda->solicitudes()->attach($solicitud['id']);
         }
+
+        //Agregar votaciones a las solicitudes
+        $votaciones = $request->input('votaciones');
+        foreach($votaciones as $votacion){
+            $sol = Solicitud::find($votacion['solicitud_id']);
+            if($votacion['estado'] == 6){
+                $sol->estado_id = $votacion['estado'];
+            } else {
+                Votacion::create([
+                    'afavor' => $votacion['afavor'],
+                    'contra' => $votacion['contra'],
+                    'abstencion' => $votacion['abstencion'],
+                    'solicitud_id'=>$votacion['solicitud_id'],
+                    'total'=>$request['generales']['votos'],
+                ]);
+                $sol->comentario_revision = $votacion['comentario'];
+                $sol->estado_id = $votacion['estado'];
+            }
+        }
+
         
         //Relacionar a los usuarios con la agenda (asistencia)
         $asistencias = $request['asistencias'];
@@ -60,7 +82,8 @@ class AgendaController extends Controller
             $act->agenda_id = $agenda->id;
             $act->save();
         }
-
+        
+        //Agregar informes
         $informes = $request['informes'];
         foreach($informes as $informe){
             $info = Informe::find($informe['id']);
@@ -134,7 +157,7 @@ class AgendaController extends Controller
                 'documentos' => $solicitud->documentos->map(function($documento) {
                     return [
                         'id' => $documento->id,
-                        'path' => $documento->titulo,
+                        'path' => $documento->path,
                     ];
                 }),
                 'creado'=>$solicitud->created_at

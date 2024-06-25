@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActaController;
 use App\Http\Controllers\AcuerdoController;
+use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InformeController;
 use App\Http\Controllers\UserController;
@@ -90,6 +91,7 @@ Route::get('/solicitudes/estado/{id}','App\Http\Controllers\SolicitudController@
 Route::get('/solicitud/doc/{id}','App\Http\Controllers\DocSolicitudController@descargar');
 
 //Endpoints para agenda
+Route::get('/agendas',[AgendaController::class,'index']);
 Route::post('/agenda','App\Http\Controllers\AgendaController@store');
 Route::get('/agenda/{id}','App\Http\Controllers\AgendaController@show');
 
