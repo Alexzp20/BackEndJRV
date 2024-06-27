@@ -101,4 +101,4 @@ Route::get('/agenda/acuerdos/{id}',[AgendaController::class,'showAcuerdos']);
 
 Route::get('/puestos','App\Http\Controllers\PuestoController@index');
 
-Route::get('/rols','App\Http\Controllers\RolController@index');
+Route::get('/rols','App\Http\Controllers\RoleController@index');
