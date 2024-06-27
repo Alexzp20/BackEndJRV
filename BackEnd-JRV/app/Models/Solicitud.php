@@ -29,7 +29,7 @@ class Solicitud extends Model
         return $this->belongsTo(Estado::class);
     }
 
-    public function profile(){
+    public function votacion(){
         return $this->hasOne(Votacion::class);
     }
 

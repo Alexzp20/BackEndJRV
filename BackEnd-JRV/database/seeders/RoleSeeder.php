@@ -29,5 +29,6 @@ class RoleSeeder extends Seeder
         Role::create(['name'=>'Administrador'])->givePermissionTo([$solicitudesAdmin, $solicitudesUsuario]);
         Role::create(['name'=>'Asistente'])->givePermissionTo($solicitudesUsuario);
         Role::create(['name'=>'Escuela'])->givePermissionTo($solicitudesUsuario);
+        Role::create(['name'=>'Unidad'])->givePermissionTo($solicitudesUsuario);
     }
 }

@@ -115,9 +115,19 @@ class AgendaController extends Controller
             }
         }
 
+
         return $arrayPlano;
     }
 
+
+    public function showAcuerdos($id){
+        $agenda = Agenda::with([
+            'solicitudes.documentos',
+            'solicitudes.acuerdos'
+        ])->findOrFail($id);
+
+        return response()->json(['agenda'=>$agenda]);
+    }
 
     public function show(Request $request){
         //Busca los datos generales de la agenda
@@ -128,6 +138,7 @@ class AgendaController extends Controller
             'solicitudes.documentos',
             'solicitudes.categoria',
             'solicitudes.subcategoria',
+            'solicitudes.votacion',
             'actas',
             'informes',
             'users'
@@ -143,7 +154,6 @@ class AgendaController extends Controller
         $asistencias = $agenda->users->map(function($user){
            return $user->pivot;
         });
-
 
         //Da el formato neesario a los arrays de cada solicitud
         $solicitudes = $agenda->solicitudes->map(function($solicitud){
@@ -164,6 +174,20 @@ class AgendaController extends Controller
             ];
         });
 
+        //Array de votaciones
+        $votaciones = $agenda->solicitudes->map(function($solicitud) {
+            if(is_object($solicitud->votacion)){
+                return [
+                    'afavor'=>$solicitud->votacion->afavor,
+                    'contra'=>$solicitud->votacion->contra,
+                    'abstencion'=>$solicitud->votacion->abstencion,
+                    'total'=>$solicitud->votacion->total,
+                    'solicitud_id'=>$solicitud->votacion->solicitud_id,
+                    'estado'=>$solicitud->estado->id
+                ];
+            } 
+        });      
+
         //Agrupa las solicitudes por categorias y subcategorias
         $solicitudesAnidadas = $solicitudes->groupBy(function($solicitud) {
             return $solicitud['categoria'];
@@ -178,7 +202,7 @@ class AgendaController extends Controller
         }); 
 
  
-        return response()->json(['generales'=>$generales,'asistencias'=>$asistencias,'actas'=>$actas,'informes'=>$informes, 'solicitudes'=>$solicitudesAnidadas]);
+        return response()->json(['generales'=>$generales,'asistencias'=>$asistencias,'actas'=>$actas,'informes'=>$informes, 'solicitudes'=>$solicitudesAnidadas, 'votaciones'=>$votaciones]);
     }
 
 }

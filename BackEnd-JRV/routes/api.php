@@ -30,7 +30,7 @@ Route::post('/login',[AuthController::class,'login']);
 
 
 
-Route::group(['middleware'=>['auth:sanctum','role_or_permission:Administrador|Asistente']], function(){
+Route::group(['middleware'=>['auth:sanctum','role_or_permission:Administrador|Asistente|Unidad']], function(){
     Route::post('/solicitud','App\Http\Controllers\SolicitudController@store');//crear solicitud
     //Route::put('/revision','App\Http\Controllers\SolicitudController@revision');//Revisar solicitud
     Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
@@ -64,6 +64,7 @@ Route::get('/acta/doc/{id}',[ActaController::class,'descargar']);
 
 //crud acuerdos
 Route::post('acuerdo',[AcuerdoController::class,'create']);
+Route::post('acuerdo/{id}',[AcuerdoController::class,'update']);
 Route::delete('acuerdo/{id}',[AcuerdoController::class,'destroy']);
 Route::get('/acuerdo/doc/{id}',[AcuerdoController::class,'descargar']);
 
@@ -75,6 +76,7 @@ Route::get('informesAgenda',[InformeController::class,'informeAsignar']);
 Route::get('informes',[InformeController::class, 'index']);
 Route::get('/informe/doc/{id}',[InformeController::class,'descargar']);
 //
+
 
 Route::get('/categorias','App\Http\Controllers\CategoriaController@index');//crear categoria
 
@@ -94,7 +96,7 @@ Route::get('/solicitud/doc/{id}','App\Http\Controllers\DocSolicitudController@de
 Route::get('/agendas',[AgendaController::class,'index']);
 Route::post('/agenda','App\Http\Controllers\AgendaController@store');
 Route::get('/agenda/{id}','App\Http\Controllers\AgendaController@show');
-
+Route::get('/agenda/acuerdos/{id}',[AgendaController::class,'showAcuerdos']);
 
 
 Route::get('/puestos','App\Http\Controllers\PuestoController@index');

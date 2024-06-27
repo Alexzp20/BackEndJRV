@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateAcuerdoRequest;
+use App\Http\Requests\UpdateAcuerdoRequest;
 use App\Models\Acuerdo;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -31,21 +32,24 @@ class AcuerdoController extends Controller
         return response()->json(['acuerdo'=>$acuerdo]);
     }
 
-    public function update(CreateAcuerdoRequest $request){
+    public function update(UpdateAcuerdoRequest $request){
 
         $acuerdo = Acuerdo::findOrFail($request->id);
-        if($request == null){
-
+        if($request->documentoAcuerdo == null){
+            $acuerdo->codigo = $request->codigoAcuerdo;
+            $acuerdo->solicitud_id = $request->solicitud;
+            $acuerdo->save();
+        } else{
+          Storage::delete($acuerdo->path);
+          $fileName = $request->codigoAcuerdo.time().'.'.$request->documentoAcuerdo->extension();
+          $request->documentoAcuerdo->storeAs('acuerdos',$fileName);
+          $acuerdo->codigo = $request->codigoAcuerdo;
+          $acuerdo->path = 'acuerdos/'.$fileName;
+          $acuerdo->solicitud_id = $request->solicitud;
+          $acuerdo->save();
         }
-        
-        $fileName = $request->codigoAcuerdo.time().'.'.$request->documentoAcuerdo->extension();
-        $request->documentoAcuerdo->storeAs('acuerdos',$fileName);
 
-        $acuerdo->codigo = $request->codigoAcuerdo;
-        $acuerdo->path = 'acuerdos/'.$fileName;
-        $acuerdo->solicitud_id = $request->solicitud;
-        $acuerdo->save();
-        
+        return response()->json(['acuerdo'=>$acuerdo]);
     }
 
     public function destroy($id){

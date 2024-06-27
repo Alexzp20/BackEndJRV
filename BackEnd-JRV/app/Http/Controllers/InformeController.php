@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateInformeRequest;
+use App\Http\Requests\UpdateInformeRequest;
 use App\Models\Informe;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -35,17 +36,19 @@ class InformeController extends Controller
         return response()->json(['informe'=>$informe],201);
     }
 
-    public function update(Request $request){
+    public function update(UpdateInformeRequest $request){
         $informe = Informe::find($request->id);
-
-
-        $fileName = $request->codigoInforme.time().'.'.$request->documentoInforme->extension();
-        $request->documentoInforme->storeAs('informes',$fileName);
-
-        $informe->codigo = $request->codigoInforme;
-        $informe->path = 'informe/'.$fileName;
-        $informe->save();
-
+        if($request->documentoInforme == null){
+            $informe->codigo = $request->codigoInforme;
+            $informe->save();
+        }else{
+            Storage::delete($informe->path);
+            $fileName = $request->codigoInforme.time().'.'.$request->documentoInforme->extension();
+            $request->documentoInforme->storeAs('informes',$fileName);
+            $informe->codigo = $request->codigoInforme;
+            $informe->path = 'informe/'.$fileName;
+            $informe->save();
+        }
         return response()->json(['informe'=>$informe],201);
     }
 
