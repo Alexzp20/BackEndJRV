@@ -49,7 +49,7 @@ class UserController extends Controller
         $user->save();
 
         $role = Role::findOrFail($request->role_id);
-        $user->assignRole($role);
+        $user->assignRole($role->name);
 
         return response()->json(['user'=>$user],201);
     }
