@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('codigo');
             $table->string('path');
             $table->unsignedBigInteger('agenda_id')->nullable();
+            $table->boolean('aprobado')->nullable();
+            $table->time('fecha_aprobacion')->nullable();
             $table->timestamps();
 
             $table->foreign('agenda_id')->references('id')->on('agendas')->onDelete('set null');

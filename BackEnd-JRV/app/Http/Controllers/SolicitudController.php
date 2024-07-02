@@ -55,7 +55,7 @@ class SolicitudController extends Controller
     //Metodo para enviar todas las solicitudes por su estado
     public function indexEstado(Request $request){
         
-        $solicitudes = Solicitud::with('documentos','categoria')->where('estado_id', $request->id)->get();
+        $solicitudes = Solicitud::with('documentos','categoria','subcategoria')->where('estado_id', $request->id)->get();
         return response()->json($solicitudes);
     }
 
@@ -80,6 +80,7 @@ class SolicitudController extends Controller
         $solicitud->categoria_id = $request->categoria_id;
         $solicitud->subcategoria_id = $request->subcategoria_id;
         $solicitud->estado_id = 1;
+        $solicitud->user_id = auth()->user()->id;
         $solicitud->save();
 
         $request->file->storeAs('solicitudes',$fileName);

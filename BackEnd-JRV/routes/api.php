@@ -46,11 +46,12 @@ Route::group(['middleware'=>['auth:sanctum','role:Administrador']], function(){
 
 //crud usuarios
 Route::get('/users','App\Http\Controllers\UserController@index');//mostrar todos los usuarios
+Route::get('/users/asistencia','App\Http\Controllers\UserController@usersAsistencia');//mostrar los usuarios para asistencia
 Route::get('/users/puesto',[UserController::class,'puesto']);
 Route::get('/user/{id}','App\Http\Controllers\UserController@show');
 Route::post('/user','App\Http\Controllers\UserController@store');//crear usuario
 Route::put('/users/{id}','App\Http\Controllers\UserController@update');//actualizar el registro
-Route::delete('/user/{id}','App\Http\Controllers\UserController@destroy');//mostrar todos los usuarios
+Route::delete('/user/{id}','App\Http\Controllers\UserController@destroy');//borrar usuario
 //
 
 //crud actas

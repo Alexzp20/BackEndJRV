@@ -26,6 +26,11 @@ class UserController extends Controller
 
     }
 
+    public function usersAsistencia(){
+        $users = User::whereNotNull('puesto_id')->get();
+        return $users;
+    }
+    
     public function puesto(Request $request){
 
         $puesto = $request->query('puesto_id');
@@ -45,7 +50,6 @@ class UserController extends Controller
         $user->fecha_nacimiento = $request->fecha_nacimiento;
         $user->carnet = $request->carnet;
         $user->puesto_id = $request->puesto_id;
-
         $user->save();
 
         $role = Role::findOrFail($request->role_id);

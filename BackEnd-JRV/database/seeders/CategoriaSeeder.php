@@ -16,6 +16,7 @@ class CategoriaSeeder extends Seeder
     public function run(): void
     {
         //
+        Categoria::create(['name'=>'SEGUIMIENTO']);
         Categoria::create(['name'=>'ASUNTOS DE INDOLE ACADEMICA']);
         Categoria::create(['name'=>'FUNCIONAMIENTO DE LA FACULTAD']);
         Categoria::create(['name'=>'MOVIMIENTO DE PERSONAL']);
