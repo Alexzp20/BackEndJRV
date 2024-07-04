@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RevisionSolRequest;
+use App\Http\Requests\SolicitudEditRevisionRequest;
 use App\Http\Requests\StoreSolicitudRequest;
 use App\Models\Solicitud;
 use App\Models\DocSolicitud;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class SolicitudController extends Controller
 {
@@ -96,15 +98,26 @@ class SolicitudController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function editAsistentes(SolicitudEditRevisionRequest $request)
     {
         //
+        try {
+            $data = $request->validated();
+            $solicitud = Solicitud::findOrFail($request->id);
+            $solicitud->update($data);
+            return response()->json($solicitud, 200);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Error de validación',
+                'errors' => $e->errors()
+            ], 422);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function show(string $id)
     {
         //
     }

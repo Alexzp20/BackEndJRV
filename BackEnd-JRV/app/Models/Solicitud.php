@@ -9,6 +9,19 @@ class Solicitud extends Model
 {
     protected $table = 'solicitudes';
 
+    protected $fillable = [
+        'codigo',
+        'descripcion',
+        'categoria_id',
+        'subcategoria_id',
+        'estado_id',
+        'comentario_revision',
+        'comentario_estado',
+        'user_id'
+    ];
+
+
+
     public function categoria (){
         return $this->belongsTo('App\Models\categoria');
     }

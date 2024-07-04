@@ -48,7 +48,6 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->fecha_nacimiento = $request->fecha_nacimiento;
-        $user->carnet = $request->carnet;
         $user->puesto_id = $request->puesto_id;
         $user->save();
 
@@ -67,7 +66,6 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = $request->password;
         $user->fecha_nacimiento = $request->fecha_nacimiento;
-        $user->carnet = $request->carnet;
         $user->puesto_id = $request->puesto_id;
         
 

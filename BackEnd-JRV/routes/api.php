@@ -5,6 +5,7 @@ use App\Http\Controllers\AcuerdoController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InformeController;
+use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SubcategoriaController;
 use Illuminate\Http\Request;
@@ -92,6 +93,8 @@ Route::get('/solicitudes','App\Http\Controllers\SolicitudController@index');
 Route::get('/solicitudes/estado/{id}','App\Http\Controllers\SolicitudController@indexEstado');//mostrar las solicitudes por su estado
 //Route::put('/revision','App\Http\Controllers\SolicitudController@revision');//Revisar solicitud
 Route::get('/solicitud/doc/{id}','App\Http\Controllers\DocSolicitudController@descargar');
+Route::put('/solicitud/edit/{id}',[SolicitudController::class,'editAsistentes']);
+
 
 //Endpoints para agenda
 Route::get('/agendas',[AgendaController::class,'index']);

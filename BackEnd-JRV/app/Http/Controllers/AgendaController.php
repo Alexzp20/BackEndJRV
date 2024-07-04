@@ -10,7 +10,9 @@ use App\Models\Agenda;
 use App\Models\Informe;
 use App\Models\Solicitud;
 use App\Models\Votacion;
+use Exception;
 use Hamcrest\Type\IsNumeric;
+use Illuminate\Support\Facades\DB;
 
 class AgendaController extends Controller
 {
@@ -23,6 +25,7 @@ class AgendaController extends Controller
 
     public function store(StoreAgendaRequest $request){
 
+        try {
         //Creacion de una nueva agenda
         $agenda = Agenda::create([
             'numero' => $request['generales']['numAgenda'],
@@ -32,7 +35,8 @@ class AgendaController extends Controller
             'primera_convocatoria'=>$request['generales']['primeraConvocatoria'],
             'segunda_convocatoria'=>$request['generales']['segundaConvocatoria'],
             'hora_inicio'=>$request['generales']['horaInicio'],
-            'hora_finalizacion'=>$request['generales']['horaFin']
+            'hora_finalizacion'=>$request['generales']['horaFin'],
+            'tipoConvocatoria'=>$request['generales']['tipoConvocatoria']
 
         ]);
         
@@ -62,17 +66,28 @@ class AgendaController extends Controller
             }
         }
 
-        
         //Relacionar a los usuarios con la agenda (asistencia)
         $asistencias = $request['asistencias'];
         //$asistenciasArray =$this->$asistencias;
         foreach($asistencias as $asistencia){
-            $agenda->users()->attach($asistencia['usuarioAsistente'],[
-                'asistencia'=> $asistencia['asistencia'],
-                'quarum'=> $asistencia['quorum'],
-                'tipo_asistente'=> $asistencia['tipoAsistente'],
-                'hora'=> $asistencia['horaAsistencia']
-            ]);
+            if(isset($asistencia['usuarioAsistente'])){
+                $agenda->users()->attach($asistencia['usuarioAsistente'],[
+                    'asistencia'=> $asistencia['asistencia'],
+                    'quarum'=> $asistencia['quorum'],
+                    'tipo_asistente'=> $asistencia['tipoAsistente'],
+                    'hora'=> $asistencia['horaAsistencia']
+                ]);
+            } else {
+                DB::table('agenda_user')->insert([
+                    'agenda_id'=> $agenda->id,
+                    'asistencia'=> $asistencia['asistencia'],
+                    'quarum'=> $asistencia['quorum'],
+                    'tipo_asistente'=> $asistencia['tipoAsistente'],
+                    'hora'=> $asistencia['horaAsistencia'],
+                    'invitado'=>$asistencia['invitado']
+                ]);
+            }
+            
         }
 
         //Agregar actas
@@ -92,6 +107,10 @@ class AgendaController extends Controller
         }
         
         return response()->json($agenda,201);
+    } catch(Exception $e){
+        echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+    }
+
     }
 
 
@@ -126,7 +145,7 @@ class AgendaController extends Controller
             'solicitudes.acuerdos'
         ])->findOrFail($id);
 
-        return response()->json(['agenda'=>$agenda]);
+        return response()->json(['agenda'=>$agenda->solicitudes]);
     }
 
     public function show(Request $request){
@@ -151,9 +170,11 @@ class AgendaController extends Controller
         $informes = $agenda->informes;
 
         //Array de las asistencias de la agenda
-        $asistencias = $agenda->users->map(function($user){
-           return $user->pivot;
-        });
+        $asistencia = DB::table('agenda_user')
+        ->leftJoin('users','agenda_user.user_id','=','users.id')
+        ->select('agenda_user.*','users.name','users.apellido')
+        ->where('agenda_user.agenda_id',$request->id)
+        ->get();
 
         //Da el formato neesario a los arrays de cada solicitud
         $solicitudes = $agenda->solicitudes->map(function($solicitud){
@@ -161,7 +182,9 @@ class AgendaController extends Controller
                 'id'=> $solicitud->id,
                 'codigo'=>$solicitud->codigo,
                 'descripcion'=>$solicitud->descripcion,
+                'categoria_id'=>$solicitud->categoria->id,
                 'categoria'=>$solicitud->categoria->name,
+                'subcategoria_id'=>$solicitud->subcategoria ? $solicitud->subcategoria->id :null,
                 'subcategoria'=>$solicitud->subcategoria ? $solicitud->subcategoria->name :null,
                 'estado'=>$solicitud->estado->name,
                 'documentos' => $solicitud->documentos->map(function($documento) {
@@ -202,7 +225,7 @@ class AgendaController extends Controller
         }); 
 
  
-        return response()->json(['generales'=>$generales,'asistencias'=>$asistencias,'actas'=>$actas,'informes'=>$informes, 'solicitudes'=>$solicitudesAnidadas, 'votaciones'=>$votaciones]);
+        return response()->json(['generales'=>$generales,'asistencias'=>$asistencia,'actas'=>$actas,'informes'=>$informes, 'solicitudes'=>$solicitudes, 'votaciones'=>$votaciones]);
     }
 
 }

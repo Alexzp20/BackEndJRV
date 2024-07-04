@@ -17,10 +17,12 @@ return new class extends Migration
             $table->integer('contra');
             $table->integer('abstencion');
             $table->integer('total');
-            $table->unsignedBigInteger('solicitud_id');
+            $table->unsignedBigInteger('solicitud_id')->nullable();
+            $table->unsignedBigInteger('acta_id')->nullable();
             $table->timestamps();
 
             $table->foreign('solicitud_id')->references('id')->on('solicitudes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('acta_id')->references('id')->on('actas')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

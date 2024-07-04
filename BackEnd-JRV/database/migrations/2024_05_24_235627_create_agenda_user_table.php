@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('agenda_user', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('agenda_id');
+            $table->string('invitado')->nullable();
             $table->boolean('asistencia');
-            $table->boolean('quarum');
+            $table->boolean('quarum')->nullable();
             $table->integer('tipo_asistente');
             $table->time('hora');
             $table->timestamps();

@@ -57,7 +57,7 @@ class User extends Authenticatable
 
     //Relacion de muchos a muchos con la tabla agendas
     public function agendas(){
-        return $this->belongsToMany(Agenda::class)->withPivot('asistencia','quarum','tipo_asistente','hora');
+        return $this->belongsToMany(Agenda::class)->withPivot('asistencia','quarum','tipo_asistente','hora','invitado');
     }
 
     public function rutas(){

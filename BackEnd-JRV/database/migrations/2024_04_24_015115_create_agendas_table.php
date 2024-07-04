@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('convoca');
             $table->date('fecha');
             $table->string('lugar');
+            $table->string('tipoConvocatoria');
             $table->time('primera_convocatoria');
             $table->time('segunda_convocatoria');
             $table->time('hora_inicio');

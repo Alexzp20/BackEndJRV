@@ -17,9 +17,9 @@ class Agenda extends Model
         'primera_convocatoria',
         'segunda_convocatoria',
         'hora_inicio',
+        'tipoConvocatoria',
         'hora_finalizacion'
     ];
-    
     
     
     //relacion muchos a muchos con solicitudes
@@ -29,7 +29,7 @@ class Agenda extends Model
 
     //Relacion de muchos a muchos con la tabla agendas
     public function users(){
-        return $this->belongsToMany(User::class)->withPivot('asistencia','quarum','tipo_asistente','hora');
+        return $this->belongsToMany(User::class)->withPivot('asistencia','quarum','tipo_asistente','hora','invitado');
     }
 
     public function actas(){
