@@ -27,7 +27,7 @@ class SolicitudEditRevisionRequest extends FormRequest
             //
             'descripcion'=>'sometimes',
             'categoria_id'=>'sometimes|exists:categorias,id',
-            'subcategoria_id'=>'sometimes|exists:subcategorias,id',
+            'subcategoria_id'=>'nullable|sometimes|exists:subcategorias,id',
             'codigo'=>'sometimes',
         ];
     }

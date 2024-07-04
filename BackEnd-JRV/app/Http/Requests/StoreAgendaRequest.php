@@ -34,6 +34,7 @@ class StoreAgendaRequest extends FormRequest
             'generales.horaInicio'=>'required|date_format:H:i',
             'generales.horaFin'=>'required|date_format:H:i',
             'generales.votos' => 'required|integer',
+            'generales.tipoConvocatoria' => 'required',
             //validaciones parametros de las solicitudes
             'solicitudes' => 'required|array',
 
@@ -58,6 +59,7 @@ class StoreAgendaRequest extends FormRequest
             'generales.horaFin.date_format'=>'Ingrese un formato de hora valido',
             'generales.votos.required' => 'Ingrese los votos para la agenda',
             'generales.votos.integer' => 'Ingrese un formato valido para la votacion de la agenda',
+            'generales.tipoConvocatoria.required' => 'Ingrese el tipo de convocatoria',
 
         ];
     }

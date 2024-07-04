@@ -53,7 +53,11 @@ class AgendaController extends Controller
             $sol = Solicitud::find($votacion['solicitud_id']);
             if($votacion['estado'] == 6){
                 $sol->estado_id = $votacion['estado'];
+                $sol->save();
             } else {
+                $sol->comentario_revision = $votacion['comentario'];
+                $sol->estado_id = $votacion['estado'];
+                $sol->save();
                 Votacion::create([
                     'afavor' => $votacion['afavor'],
                     'contra' => $votacion['contra'],
@@ -61,8 +65,6 @@ class AgendaController extends Controller
                     'solicitud_id'=>$votacion['solicitud_id'],
                     'total'=>$request['generales']['votos'],
                 ]);
-                $sol->comentario_revision = $votacion['comentario'];
-                $sol->estado_id = $votacion['estado'];
             }
         }
 

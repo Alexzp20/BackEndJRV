@@ -23,11 +23,12 @@ class CategoriaSeeder extends Seeder
         Categoria::create(['name'=>'VARIOS']);
 
 
-        Subcategoria::create(['name'=>'Administracion Academica','categoria_id'=>'1']);
-        Subcategoria::create(['name'=>'Comite Tecnico Asesor','categoria_id'=>'1']);
-        Subcategoria::create(['name'=>'Otras solicitudes de indole academico','categoria_id'=>'1']);
-        Subcategoria::create(['name'=>'Sin erogacion de fondos','categoria_id'=>'3']);
-        Subcategoria::create(['name'=>'Con erogacion de fondos','categoria_id'=>'3']);
+        Subcategoria::create(['name'=>'Administracion Academica','categoria_id'=>'2']);
+        Subcategoria::create(['name'=>'Comite Tecnico Asesor','categoria_id'=>'2']);
+        Subcategoria::create(['name'=>'Direccion general de procesos de graduacion','categoria_id'=>'2']);
+        Subcategoria::create(['name'=>'Otras solicitudes de indole academico','categoria_id'=>'2']);
+        Subcategoria::create(['name'=>'Sin erogacion de fondos','categoria_id'=>'4']);
+        Subcategoria::create(['name'=>'Con erogacion de fondos','categoria_id'=>'4']);
 
     }
 }
