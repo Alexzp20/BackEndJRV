@@ -14,7 +14,8 @@ class Votacion extends Model
         'contra',
         'abstencion',
         'total',
-        'solicitud_id'
+        'solicitud_id',
+        'acta_id'
     ];
 
     public function solicitud(){

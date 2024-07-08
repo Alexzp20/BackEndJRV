@@ -16,11 +16,12 @@ return new class extends Migration
             $table->string('codigo');
             $table->string('path');
             $table->unsignedBigInteger('agenda_id')->nullable();
-            $table->boolean('aprobado')->nullable();
+            $table->unsignedBigInteger('estado_acta_id')->nullable();
             $table->time('fecha_aprobacion')->nullable();
             $table->timestamps();
 
             $table->foreign('agenda_id')->references('id')->on('agendas')->onDelete('set null');
+            $table->foreign('estado_acta_id')->references('id')->on('estado_acta')->onDelete('set null');
         });
     }
 

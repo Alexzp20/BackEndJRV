@@ -30,6 +30,7 @@ class ActaController extends Controller
 
         $acta = new Acta;
         $acta->codigo = $request->codigoActa;
+        $acta->estado_acta_id = 1;
         $acta->path = 'actas/'.$fileName;
         $acta->save();
 

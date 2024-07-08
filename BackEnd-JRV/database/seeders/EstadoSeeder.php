@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Estado;
+use App\Models\EstadoActa;
 
 class EstadoSeeder extends Seeder
 {
@@ -20,6 +21,10 @@ class EstadoSeeder extends Seeder
         Estado::create(['id'=>'4','name'=>'APROBADO']);
         Estado::create(['id'=>'5','name'=>'DENEGADO']);
         Estado::create(['id'=>'6','name'=>'PENDIENTE']);
+
+        EstadoActa::create(['name'=>'PENDIENTE']);
+        EstadoActa::create(['name'=>'APROBADO']);
+        EstadoActa::create(['name'=>'DENEGADO']);
 
     }
 }

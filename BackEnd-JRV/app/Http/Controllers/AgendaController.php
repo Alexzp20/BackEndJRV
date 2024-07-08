@@ -68,6 +68,23 @@ class AgendaController extends Controller
             }
         }
 
+        //Agregar votaciones a las actas
+        $votacionesActas = $request->input('votacionesActas');
+        foreach($votacionesActas as $votacionActa){
+            $act = Acta::find($votacionActa['acta_id']);
+            if($votacionActa['estado'] !== 1){
+                $act->estado_acta_id = $votacionActa['estado'];
+                $act->save();
+                Votacion::create([
+                    'afavor' => $votacionActa['afavor'],
+                    'contra' => $votacionActa['contra'],
+                    'abstencion' => $votacionActa['abstencion'],
+                    'acta_id'=>$votacionActa['acta_id'],
+                    'total'=>$request['generales']['votos'],
+                ]);
+            }
+        }
+
         //Relacionar a los usuarios con la agenda (asistencia)
         $asistencias = $request['asistencias'];
         //$asistenciasArray =$this->$asistencias;
@@ -114,7 +131,6 @@ class AgendaController extends Controller
     }
 
     }
-
 
 
     //funcion para convertir el array todo loco que manda pedro en un array normal de solicitudes

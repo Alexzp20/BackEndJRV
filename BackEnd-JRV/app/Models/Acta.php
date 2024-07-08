@@ -12,4 +12,8 @@ class Acta extends Model
     public function agenda(){
         return $this->belongsTo(Agenda::class);
     }
+
+    public function estado(){
+        return $this->belongsTo(EstadoActa::class);
+    }
 }
