@@ -22,6 +22,9 @@ class SolicitudController extends Controller
     {
         $this->middleware('permission:revisar solicitud',['only'=>['revision']]);
         $this->middleware('permission:crear solicitud',['only'=>['store']]);
+        $this->middleware('permission:endpoints solicitud',['only'=>['index']]);
+        $this->middleware('permission:estado solicitud',['only'=>['indexEstado']]);
+        $this->middleware('permission:editar Asistentes',['only'=>['editAsistentes']]);
     }
 
 

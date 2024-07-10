@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\Puesto;
 
 class PuestoController extends Controller
-{
+{   
+    function __construct()
+    {
+        $this->middleware('permission:mostrar Puesto',['only'=>['index']]);
+    }
     //
     public function index(){
 

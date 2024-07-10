@@ -11,7 +11,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class AcuerdoController extends Controller
-{
+{   
+    function __construct()
+    {
+        $this->middleware('permission:crear Acuerdo',['only'=>['create']]);
+        $this->middleware('permission:actualizar Acuerdo',['only'=>['update']]);
+        $this->middleware('permission:borrar Acuerdo',['only'=>['destroy']]);
+        $this->middleware('permission:descargar Acuerdo',['only'=>['descargar']]);
+    }
     //
     public function index() {
         $acuerdos = Acuerdo::all();

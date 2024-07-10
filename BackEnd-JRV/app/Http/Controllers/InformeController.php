@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\Storage;
 
 class InformeController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:crear informes',['only'=>['create']]);
+        $this->middleware('permission:actualizar informes',['only'=>['update']]);
+        $this->middleware('permission:borrar informes',['only'=>['destroy']]);
+        $this->middleware('permission:asignar informes',['only'=>['informeAsignar']]);
+        $this->middleware('permission:mostrar informes',['only'=>['index']]);
+        $this->middleware('permission:descargar informes',['only'=>['descargar']]);
+    }
     //
     public function index(){
         $informes = Informe::all();

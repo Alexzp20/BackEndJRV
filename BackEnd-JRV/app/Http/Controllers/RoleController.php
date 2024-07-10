@@ -8,6 +8,10 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:crear Rol',['only'=>['index']]);
+    }
     //
     public function index()
     {

@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\Storage;
 
 class ActaController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:crear acta',['only'=>['create']]);
+        $this->middleware('permission:actualizar acta',['only'=>['update']]);
+        $this->middleware('permission:borrar acta',['only'=>['destroy']]);
+        $this->middleware('permission:mostrar acta',['only'=>['index']]);
+        $this->middleware('permission:asignar Acta',['only'=>['actasAsignacion']]);
+        $this->middleware('permission:descargar acta',['only'=>['descargar']]);
+    }
     //
     public function index(){
         $actas = Acta::all();

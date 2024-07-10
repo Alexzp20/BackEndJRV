@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Storage;
 
 class DocSolicitudController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:descargar solicitud',['only'=>['descargar']]);
+    }
     //
     public function descargar($id){
 

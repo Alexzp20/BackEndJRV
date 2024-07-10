@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\DB;
 
 class AgendaController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:mostrar Agenda',['only'=>['index']]);
+        $this->middleware('permission:crear Agenda',['only'=>['store']]);
+        $this->middleware('permission:mostrar idAgenda',['only'=>['show']]);
+        $this->middleware('permission:mostrar idAcuerdo',['only'=>['showAcuerdos']]);
+    }
     //
     public function index(){
 

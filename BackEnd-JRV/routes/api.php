@@ -41,9 +41,16 @@ Route::group(['middleware'=>['auth:sanctum','role_or_permission:Administrador|As
 Route::group(['middleware'=>['auth:sanctum','role:Administrador']], function(){
     Route::put('/revision','App\Http\Controllers\SolicitudController@revision');//Revisar solicitud
 });
+//Endpoints para solicitudes
+Route::get('/solicitudes','App\Http\Controllers\SolicitudController@index');
+//Route::post('/solicitud','App\Http\Controllers\SolicitudController@store');//crear solicitud
+Route::get('/solicitudes/estado/{id}','App\Http\Controllers\SolicitudController@indexEstado');//mostrar las solicitudes por su estado
+//Route::put('/revision','App\Http\Controllers\SolicitudController@revision');//Revisar solicitud
+Route::put('/solicitud/edit/{id}',[SolicitudController::class,'editAsistentes']);
 
 
 
+Route::get('/solicitud/doc/{id}','App\Http\Controllers\DocSolicitudController@descargar');
 
 //crud usuarios
 Route::get('/users','App\Http\Controllers\UserController@index');//mostrar todos los usuarios
@@ -80,21 +87,12 @@ Route::get('/informe/doc/{id}',[InformeController::class,'descargar']);
 //
 
 
-Route::get('/categorias','App\Http\Controllers\CategoriaController@index');//crear categoria
-
+Route::get('/categorias','App\Http\Controllers\CategoriaController@index');//mostrar categoria
 Route::post('/categoria','App\Http\Controllers\CategoriaController@store');//crear categoria
+
 Route::post('/subcategoria','App\Http\Controllers\SubcategoriaController@store');//crear subcategoria
 Route::get('/subcategoria/categoria',[SubcategoriaController::class,'categoria']);
 
-
-//Endpoints para solicitudes
-Route::get('/solicitudes','App\Http\Controllers\SolicitudController@index');
-//Route::post('/solicitud','App\Http\Controllers\SolicitudController@store');//crear solicitud
-Route::get('/solicitudes/estado/{id}','App\Http\Controllers\SolicitudController@indexEstado');//mostrar las solicitudes por su estado
-//Route::put('/revision','App\Http\Controllers\SolicitudController@revision');//Revisar solicitud
-Route::get('/solicitud/doc/{id}','App\Http\Controllers\DocSolicitudController@descargar');
-Route::put('/solicitud/edit/{id}',[SolicitudController::class,'editAsistentes']);
-Route::delete('/solicitud/{id}',[SolicitudController::class,'destroy']);
 
 //Endpoints para agenda
 Route::get('/agendas',[AgendaController::class,'index']);

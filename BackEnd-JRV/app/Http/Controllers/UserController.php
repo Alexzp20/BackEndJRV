@@ -12,6 +12,16 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
     //
+    function __construct()
+    {
+        $this->middleware('permission:mostrar Usuarios',['only'=>['index']]);
+        $this->middleware('permission:mostrar UsuAsistencia',['only'=>['usersAsistencia']]);
+        $this->middleware('permission:mostrar Puesto',['only'=>['puesto']]);
+        $this->middleware('permission:mostrar idUsuario',['only'=>['show']]);
+        $this->middleware('permission:crear usuario',['only'=>['store']]);
+        $this->middleware('permission:actualizar usuario',['only'=>['update']]);
+        $this->middleware('permission:borrar usuario',['only'=>['destroy']]);
+    }
 
     public function index(){
 

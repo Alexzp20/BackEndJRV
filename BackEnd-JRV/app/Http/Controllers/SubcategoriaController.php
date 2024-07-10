@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class SubcategoriaController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:crear SubCategoria',['only'=>['store']]);
+        $this->middleware('permission:mostrar SubCategoria',['only'=>['categoria']]);
+    }
     /**
      * Display a listing of the resource.
      */
