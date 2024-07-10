@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('solicitud_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('solicitud_id')->references('id')->on('solicitudes')->onDelete('set null');
+            $table->foreign('solicitud_id')->references('id')->on('solicitudes')->onDelete('cascade');
         });
     }
 

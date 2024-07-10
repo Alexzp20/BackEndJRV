@@ -48,7 +48,7 @@ Route::group(['middleware'=>['auth:sanctum','role:Administrador']], function(){
 //crud usuarios
 Route::get('/users','App\Http\Controllers\UserController@index');//mostrar todos los usuarios
 Route::get('/users/asistencia','App\Http\Controllers\UserController@usersAsistencia');//mostrar los usuarios para asistencia
-Route::get('/users/puesto',[UserController::class,'puesto']);
+Route::get('/users/puesto',[UserController::class,'puesto']);//Muestra los puestos
 Route::get('/user/{id}','App\Http\Controllers\UserController@show');
 Route::post('/user','App\Http\Controllers\UserController@store');//crear usuario
 Route::put('/users/{id}','App\Http\Controllers\UserController@update');//actualizar el registro
@@ -94,7 +94,7 @@ Route::get('/solicitudes/estado/{id}','App\Http\Controllers\SolicitudController@
 //Route::put('/revision','App\Http\Controllers\SolicitudController@revision');//Revisar solicitud
 Route::get('/solicitud/doc/{id}','App\Http\Controllers\DocSolicitudController@descargar');
 Route::put('/solicitud/edit/{id}',[SolicitudController::class,'editAsistentes']);
-
+Route::delete('/solicitud/{id}',[SolicitudController::class,'destroy']);
 
 //Endpoints para agenda
 Route::get('/agendas',[AgendaController::class,'index']);

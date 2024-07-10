@@ -8,7 +8,9 @@ use App\Http\Requests\SolicitudEditRevisionRequest;
 use App\Http\Requests\StoreSolicitudRequest;
 use App\Models\Solicitud;
 use App\Models\DocSolicitud;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class SolicitudController extends Controller
@@ -19,13 +21,14 @@ class SolicitudController extends Controller
     function __construct()
     {
         $this->middleware('permission:revisar solicitud',['only'=>['revision']]);
+        $this->middleware('permission:crear solicitud',['only'=>['store']]);
     }
 
 
     public function index()
     {
 
-        $solicitudes = Solicitud::with('categoria','subcategoria','estado')->get();
+        $solicitudes = Solicitud::with('categoria','subcategoria','estado','documentos')->get();
 
         return response()->json($solicitudes->map(function($solicitud){
             return[
@@ -35,7 +38,9 @@ class SolicitudController extends Controller
                 'categoria'=>$solicitud->categoria->name,
                 'subcategoria'=>$solicitud->subcategoria ? $solicitud->subcategoria->name :null,
                 'estado'=>$solicitud->estado->name,
-                'creado'=>$solicitud->created_at
+                'creado'=>$solicitud->created_at,
+                'comentario'=>$solicitud->comentario_revision,
+                'documentos'=>$solicitud->documentos
             ];
         }));
     }
@@ -88,7 +93,7 @@ class SolicitudController extends Controller
         $request->file->storeAs('solicitudes',$fileName);
         $doc = new DocSolicitud;
         $doc->name = $request->name;
-        $doc->path = 'app/solicitudes/' .$fileName;
+        $doc->path = 'solicitudes/' .$fileName;
         $doc->solicitud_id = $solicitud->id;
         $doc->save();
 
@@ -136,5 +141,19 @@ class SolicitudController extends Controller
     public function destroy(string $id)
     {
         //
+        try{
+            $solicitud = Solicitud::with('documentos')->findOrFail($id);
+            $documentos = $solicitud->documentos;
+            foreach($documentos as $documento){
+                $ruta = $documento['path'];
+                if(Storage::exists($ruta)){
+                    Storage::delete($ruta);
+                }
+            }
+            $solicitud->delete();
+            return response()->json(['message' => $solicitud], 200);
+        } catch(ModelNotFoundException){
+            return response()->json(['error' => 'La solicitud no existe'], 404);
+        }
     }
 }
