@@ -53,7 +53,7 @@ class RoleSeeder extends Seeder
         ];
         $puestoUsuario = [
             
-            Permission::create(['name'=> 'mostrar Puesto']),
+            Permission::create(['name'=> 'mostrar PuestoU']),
         ];
         $mostrarIDUsuario = [
             
