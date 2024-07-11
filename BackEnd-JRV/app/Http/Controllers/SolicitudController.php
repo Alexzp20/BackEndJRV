@@ -30,8 +30,7 @@ class SolicitudController extends Controller
 
     public function index()
     {
-
-        $solicitudes = Solicitud::with('categoria','subcategoria','estado','documentos')->get();
+        $solicitudes = Solicitud::with('categoria','subcategoria','estado','documentos')->where('user_id','=',auth()->user()->id)->orderBy('created_at','desc')->get();
 
         return response()->json($solicitudes->map(function($solicitud){
             return[
@@ -154,7 +153,7 @@ class SolicitudController extends Controller
                 }
             }
             $solicitud->delete();
-            return response()->json(['message' => $solicitud], 200);
+            return response()->json(['message' => 'Solicitud eliminada'], 200);
         } catch(ModelNotFoundException){
             return response()->json(['error' => 'La solicitud no existe'], 404);
         }

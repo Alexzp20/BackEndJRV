@@ -10,7 +10,7 @@ class RoleController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:crear Rol',['only'=>['index']]);
+        $this->middleware('permission:mostrar Rol',['only'=>['index']]);
     }
     //
     public function index()
