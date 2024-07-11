@@ -30,7 +30,7 @@ class SolicitudController extends Controller
 
     public function index()
     {
-        $solicitudes = Solicitud::with('categoria','subcategoria','estado','documentos')->where('user_id','=',auth()->user()->id)->orderBy('created_at','desc')->get();
+        $solicitudes = Solicitud::with('categoria','subcategoria','estado','documentos')->where('user_id',auth()->user()->id)->orderBy('created_at','desc')->get();
 
         return response()->json($solicitudes->map(function($solicitud){
             return[

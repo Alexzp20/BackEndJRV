@@ -35,7 +35,7 @@ Route::post('/login',[AuthController::class,'login']);
 Route::group(['middleware'=>['auth:sanctum','role_or_permission:Administrador|Asistente|Unidad|Escuela']], function(){
     //API's solicitudes
     Route::post('/solicitud','App\Http\Controllers\SolicitudController@store');//crear solicitud
-    Route::get('/solicitudes',[SolicitudController::class],'index');//muestra las solicitudes del usuario
+    Route::get('/solicitudes',[SolicitudController::class,'index']);//muestra las solicitudes del usuario
     Route::get('/solicitudes/estado/{id}',[SolicitudController::class, 'indexEstado']);//muestra las solicitudes con cierto estado
     Route::get('/solicitud/doc/{id}',[DocSolicitudController::class,'descargar']);//descargar el doc de la solicitud
 
