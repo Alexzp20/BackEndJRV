@@ -16,8 +16,21 @@ class AuthController extends Controller
         
 
         if (Auth::attempt($request->only('email','password'))){
-            $user = User::with('rutas')->where('email',$request['email'])->firstOrFail();
-            $userDatos = User::findOrFail($user->id);
+            $user = User::with('rutas','roles:id,name')->where('email',$request['email'])->firstOrFail();
+            $userDatos = [
+                'id'=>$user->id,
+                'username'=>$user->username,
+                'name'=>$user->name,
+                'apellido'=>$user->apellido,
+                'email'=>$user->email,
+                'puesto_id'=>$user->puesto_id,
+                'roles'=>$user->roles->map(function($role){
+                    return [
+                        'id'=>$role->id,
+                        'name'=>$role->name
+                    ];
+                })
+            ];
             $token = $user->createToken('auth_token')->plainTextToken;
             $rutas = $user->rutas;
 

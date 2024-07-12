@@ -4,6 +4,7 @@ use App\Http\Controllers\ActaController;
 use App\Http\Controllers\AcuerdoController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DocSolicitudController;
 use App\Http\Controllers\InformeController;
 use App\Http\Controllers\SolicitudController;
@@ -34,9 +35,10 @@ Route::post('/login',[AuthController::class,'login']);
 
 Route::group(['middleware'=>['auth:sanctum','role_or_permission:Administrador|Asistente|Unidad|Escuela']], function(){
     //API's solicitudes
-    Route::post('/solicitud','App\Http\Controllers\SolicitudController@store');//crear solicitud
+    Route::post('/solicitud',[SolicitudController::class,'store']);//crear solicitud
     Route::get('/solicitudes',[SolicitudController::class,'index']);//muestra las solicitudes del usuario
     Route::get('/solicitudes/estado/{id}',[SolicitudController::class, 'indexEstado']);//muestra las solicitudes con cierto estado
+    Route::delete('/solicitud/{id}',[SolicitudController::class,'destroy']);//Eliminar solicitud
     Route::get('/solicitud/doc/{id}',[DocSolicitudController::class,'descargar']);//descargar el doc de la solicitud
 
     //API's actas
@@ -48,22 +50,22 @@ Route::group(['middleware'=>['auth:sanctum','role_or_permission:Administrador|As
     //crud informes
     Route::get('/informe/doc/{id}',[InformeController::class,'descargar']);
 
-    Route::get('/categorias','App\Http\Controllers\CategoriaController@index');//mostrar categoria
+    Route::get('/categorias',[CategoriaController::class, 'index']);//mostrar categoria
     Route::get('/subcategoria/categoria',[SubcategoriaController::class,'categoria']);
 
     //API's agenda
     Route::get('/agendas',[AgendaController::class,'index']);//mostrar agendas
-    Route::get('/agenda/{id}','App\Http\Controllers\AgendaController@show');
+    Route::get('/agenda/{id}',[AgendaController::class,'show']);//mostrar agenda su id
 
-    Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+    Route::get('/logout', [AuthController::class, 'logout']);
 });
 
 
 Route::group(['middleware'=>['auth:sanctum','role:Administrador']], function(){
     //API's solicitudes
-    Route::put('/revision','App\Http\Controllers\SolicitudController@revision');//Revisar solicitud
+    Route::put('/revision',[SolicitudController::class,'revision']);//Revisar solicitud
     Route::put('/solicitud/edit/{id}',[SolicitudController::class,'editAsistentes']);//Editar solicitud
-    Route::delete('/solicitud/{id}',[SolicitudController::class,'destroy']);//Eliminar solicitud
+    
 
     //API's usuarios
     Route::get('/users',[UserController::class,'index']);//mostrar todos los usuarios
