@@ -12,6 +12,7 @@ use App\Models\Solicitud;
 use App\Models\Votacion;
 use Exception;
 use Hamcrest\Type\IsNumeric;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 
 class AgendaController extends Controller
@@ -28,6 +29,23 @@ class AgendaController extends Controller
 
         $agenda = Agenda::all();
         return response()->json($agenda);
+    }
+
+    public function publicar(String $id){
+
+        try {
+            $agenda = Agenda::findOrFail($id);
+            $agenda->publicada = true;
+            $agenda->save();
+    
+            return response()->json([
+                'message' => 'Agenda publicada'
+            ], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'La agenda no existe'
+            ], 404);
+        }
     }
 
     public function store(StoreAgendaRequest $request){

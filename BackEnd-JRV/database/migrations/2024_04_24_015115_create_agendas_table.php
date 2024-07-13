@@ -22,6 +22,7 @@ return new class extends Migration
             $table->time('segunda_convocatoria');
             $table->time('hora_inicio');
             $table->time('hora_finalizacion');
+            $table->boolean('publicada')->default(false);
             $table->timestamps();
         });
     }

@@ -107,6 +107,7 @@ Route::group(['middleware'=>['auth:sanctum','role:Administrador']], function(){
 
 });
 
+Route::post('/publicarAgenda/{id}',[AgendaController::class,'publicar']);
 
 //Endpoints para solicitudes
 //Route::get('/solicitudes','App\Http\Controllers\SolicitudController@index');
