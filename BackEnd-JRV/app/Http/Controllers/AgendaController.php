@@ -31,6 +31,11 @@ class AgendaController extends Controller
         return response()->json($agenda);
     }
 
+    public function indexPublicadas(){
+        $agenda = Agenda::where('publicada',true)->get();
+        return response()->json($agenda);
+    }
+
     public function publicar(String $id){
 
         try {

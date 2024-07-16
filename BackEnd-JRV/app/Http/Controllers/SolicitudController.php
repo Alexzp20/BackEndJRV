@@ -65,7 +65,7 @@ class SolicitudController extends Controller
     public function indexEstado(string $id){
         
         $solicitudes = Solicitud::with('documentos','categoria','subcategoria')->where('estado_id', $id)->get();
-        return response()->json($solicitudes);
+        return $solicitudes;
     }
 
     /**
