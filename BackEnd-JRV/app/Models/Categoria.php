@@ -10,10 +10,10 @@ class Categoria extends Model
     use HasFactory;
 
     public function subcategorias(){
-        return $this->hasMany('App\Models\subcategoria');
+        return $this->hasMany(Subcategoria::class);
     }
 
     public function solicitudes(){
-        return $this->hasMany('App\Models\solicitud');
+        return $this->hasMany(Solicitud::class);
     }
 }

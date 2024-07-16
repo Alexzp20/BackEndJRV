@@ -52,7 +52,7 @@ class User extends Authenticatable
     
 
     public function puesto(){
-        return $this->belongsTo('App\Models\Puesto');
+        return $this->belongsTo(Puesto::class);
     }
 
     //Relacion de muchos a muchos con la tabla agendas
