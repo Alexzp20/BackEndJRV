@@ -23,11 +23,11 @@ class Solicitud extends Model
 
 
     public function categoria (){
-        return $this->belongsTo('App\Models\categoria');
+        return $this->belongsTo(Categoria::class);
     }
 
     public function subcategoria (){
-        return $this->belongsTo('App\Models\subcategoria');
+        return $this->belongsTo(Subcategoria::class);
     }
 
     public function documentos (){
