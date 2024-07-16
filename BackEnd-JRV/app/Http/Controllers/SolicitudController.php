@@ -64,7 +64,7 @@ class SolicitudController extends Controller
     //Metodo para enviar todas las solicitudes por su estado
     public function indexEstado(string $id){
         
-        $solicitudes = Solicitud::with('documentos','categoria','subcategoria')->where('estado_id', $id)->get();
+        $solicitudes = Solicitud::where('estado_id', $id)->get();
         return $solicitudes;
     }
 
