@@ -26,6 +26,7 @@ class CreateInformeRequest extends FormRequest
         return [
             //
             'codigoInforme'=>'required',
+            'remitente'=>'sometimes:exists:remitente_informes,id',
             'documentoInforme'=>'required|extensions:pdf'
         ];
     }
@@ -35,7 +36,8 @@ class CreateInformeRequest extends FormRequest
         return[
             'codigoInforme.required'=>'Ingrese un codigo',
             'documentoInforme.required'=>'Agregue un archivo',
-            'documentoInforme.extensions'=>'El archivo debe ser formato pdf'
+            'documentoInforme.extensions'=>'El archivo debe ser formato pdf',
+            'remitente.exists'=>'Ingrese en remitente valido'
         ];
     }
 

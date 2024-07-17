@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Categoria;
+use App\Models\RemitenteInforme;
 use App\Models\Subcategoria;
 
 
@@ -22,7 +23,6 @@ class CategoriaSeeder extends Seeder
         Categoria::create(['name'=>'MOVIMIENTO DE PERSONAL']);
         Categoria::create(['name'=>'VARIOS']);
 
-
         Subcategoria::create(['name'=>'Administracion Academica','categoria_id'=>'2']);
         Subcategoria::create(['name'=>'Comite Tecnico Asesor','categoria_id'=>'2']);
         Subcategoria::create(['name'=>'Direccion general de procesos de graduacion','categoria_id'=>'2']);
@@ -30,5 +30,8 @@ class CategoriaSeeder extends Seeder
         Subcategoria::create(['name'=>'Sin erogacion de fondos','categoria_id'=>'4']);
         Subcategoria::create(['name'=>'Con erogacion de fondos','categoria_id'=>'4']);
 
+        RemitenteInforme::create(['name'=>'Consejo Superior Universitario']);
+        RemitenteInforme::create(['name'=>'Asamblea General Universitaria']);
+        RemitenteInforme::create(['name'=>'Otra']);
     }
 }

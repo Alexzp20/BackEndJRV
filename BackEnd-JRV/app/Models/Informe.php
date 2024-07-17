@@ -12,4 +12,8 @@ class Informe extends Model
     public function agenda(){
         return $this->belongsTo(Agenda::class);
     }
+
+    public function remitente(){
+        return $this->belongsTo(RemitenteInforme::class);
+    }
 }

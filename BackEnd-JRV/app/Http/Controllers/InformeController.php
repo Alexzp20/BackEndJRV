@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateInformeRequest;
 use App\Http\Requests\UpdateInformeRequest;
 use App\Models\Informe;
+use App\Models\RemitenteInforme;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -27,6 +28,11 @@ class InformeController extends Controller
         return $informes;
     }
 
+    public function remitente(){
+        $remitentes = RemitenteInforme::all();
+        return response()->json($remitentes);
+    }
+
     public function informeAsignar(){
         $informes = Informe::where('agenda_id',null)->get();
         return response()->json($informes);
@@ -39,6 +45,7 @@ class InformeController extends Controller
 
         $informe = new Informe();
         $informe->codigo = $request->codigoInforme;
+        $informe->remitente = $request->remitente;
         $informe->path = 'informes/'.$fileName;
         $informe->save();
 
