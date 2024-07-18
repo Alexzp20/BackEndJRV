@@ -24,7 +24,8 @@ class InformeController extends Controller
     }
     //
     public function index(){
-        $informes = Informe::all();
+        $informes = Informe::with('remitente')->all();
+        
         return $informes;
     }
 
@@ -56,12 +57,14 @@ class InformeController extends Controller
         $informe = Informe::find($request->id);
         if($request->documentoInforme == null){
             $informe->codigo = $request->codigoInforme;
+            $informe->remitente = $request->remitente;
             $informe->save();
         }else{
             Storage::delete($informe->path);
             $fileName = $request->codigoInforme.time().'.'.$request->documentoInforme->extension();
             $request->documentoInforme->storeAs('informes',$fileName);
             $informe->codigo = $request->codigoInforme;
+            $informe->remitente = $request->remitente;
             $informe->path = 'informe/'.$fileName;
             $informe->save();
         }

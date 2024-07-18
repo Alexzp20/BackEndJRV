@@ -26,7 +26,8 @@ class UpdateInformeRequest extends FormRequest
         return [
             //
             'codigoInforme'=>'required',
-            'documentoInforme'=>'extensions:pdf'
+            'documentoInforme'=>'extensions:pdf',
+            'remitente'=>'exists:remitente_informes,id',
         ];
     }
 
@@ -34,7 +35,8 @@ class UpdateInformeRequest extends FormRequest
     {
         return[
             'codigoInforme.required'=>'Ingrese un codigo',
-            'documentoInforme.extensions'=>'El archivo debe ser formato pdf'
+            'documentoInforme.extensions'=>'El archivo debe ser formato pdf',
+            'remitente.exists'=>'Ingrese en remitente valido'
         ];
     }
     protected function failedValidation(Validator $validator)
