@@ -13,7 +13,7 @@ class Informe extends Model
         return $this->belongsTo(Agenda::class);
     }
 
-    public function remitente(){
-        return $this->belongsTo(RemitenteInforme::class);
+    public function remite(){
+        return $this->belongsTo(RemitenteInforme::class, 'remitente');
     }
 }

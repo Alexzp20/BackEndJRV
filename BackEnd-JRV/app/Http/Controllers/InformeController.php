@@ -24,9 +24,18 @@ class InformeController extends Controller
     }
     //
     public function index(){
-        $informes = Informe::with('remitente')->all();
-        
-        return $informes;
+        $informes = Informe::with('remite')->orderBy('created_at','desc')->get();
+        return response()->json($informes->map(function($informe){
+            return[
+                'id'=> $informe->id,
+                'codigo'=> $informe->codigo,
+                'path'=>$informe->path,
+                'agenda_id'=>$informe->agenda_id,
+                'remitente_id'=>$informe->remite ? $informe->remite->id :null,
+                'remitente_name'=>$informe->remite ? $informe->remite->name :null,
+                'created_at'=>$informe->created_at
+            ];
+        }));
     }
 
     public function remitente(){
