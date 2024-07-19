@@ -24,6 +24,6 @@ class UserSeeder extends Seeder
         User::create(['username'=>'Secretaria1','name'=>'Secretario','email'=>'secretaria1@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'3'])->assignRole('Administrador')->rutas()->attach([1,2,3,4,6,7,8,9,10]);
         User::create(['username'=>'Secretaria2','name'=>'Secretario','email'=>'secretaria2@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'3'])->assignRole('Administrador')->rutas()->attach([1,2,3,4,6,7,8,9,10]);
         User::create(['username'=>'Secretaria3','name'=>'Secretario','email'=>'secretaria3@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'3'])->assignRole('Administrador')->rutas()->attach([1,2,3,4,6,7,8,9,10]);
-        User::create(['username'=>'Secretario3','name'=>'Raul','apellido'=>'Fabian','email'=>'raul.fabian@ues.edu.sv','password'=>'12345','puesto_id'=>'3'])->assignRole('Administrador')->rutas()->attach([1,2,3,4,6,7,8,9,10]);
+        User::create(['username'=>'Secretario','name'=>'Raul','apellido'=>'Fabian','email'=>'raul.fabian@ues.edu.sv','password'=>'12345','puesto_id'=>'3'])->assignRole('Administrador')->rutas()->attach([1,2,3,4,6,7,8,9,10]);
     }
 }
