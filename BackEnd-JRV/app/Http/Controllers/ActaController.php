@@ -28,7 +28,7 @@ class ActaController extends Controller
     }
 
     public function actasAsignacion(){
-        $actas = Acta::where('agenda_id',null)->get();
+        $actas = Acta::where('estado_acta_id',1)->get();
         return response()->json($actas);
     }
 

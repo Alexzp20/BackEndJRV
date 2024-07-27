@@ -16,4 +16,8 @@ class Acta extends Model
     public function estado(){
         return $this->belongsTo(EstadoActa::class);
     }
+
+    public function votacion(){
+        return $this->hasOne(Votacion::class);
+    }
 }

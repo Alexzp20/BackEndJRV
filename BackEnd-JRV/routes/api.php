@@ -65,7 +65,7 @@ Route::group(['middleware'=>['auth:sanctum','role:Administrador']], function(){
     //API's solicitudes
     Route::put('/revision',[SolicitudController::class,'revision']);//Revisar solicitud
     Route::put('/solicitud/edit/{id}',[SolicitudController::class,'editAsistentes']);//Editar solicitud
-    
+    Route::get('/solicitudesAsignacion',[SolicitudController::class,'solicitudesAsignacion']);
 
     //API's usuarios
     Route::get('/users',[UserController::class,'index']);//mostrar todos los usuarios
@@ -110,6 +110,7 @@ Route::group(['middleware'=>['auth:sanctum','role:Administrador']], function(){
 Route::post('/publicarAgenda/{id}',[AgendaController::class,'publicar']);
 Route::get('/indexPublicadas',[AgendaController::class,'indexPublicadas']);
 Route::get('/remitentes',[InformeController::class,'remitente']);
+Route::put('/agenda/{id}',[AgendaController::class,'update']);
 //Endpoints para solicitudes
 //Route::get('/solicitudes','App\Http\Controllers\SolicitudController@index');
 //Route::post('/solicitud','App\Http\Controllers\SolicitudController@store');//crear solicitud

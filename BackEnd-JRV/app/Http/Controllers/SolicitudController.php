@@ -70,6 +70,13 @@ class SolicitudController extends Controller
         return $solicitudes;
     }
 
+    public function solicitudesAsignacion(){
+        $solicitudes = Solicitud::with(['documentos','categoria','subcategoria','user' => function($query) {
+            $query->select('id', 'username','name','apellido','email');
+        }])->whereIn('estado_id', [2,6])->get();
+        return $solicitudes;
+    }
+
     /**
      * Show the form for creating a new resource.
      */

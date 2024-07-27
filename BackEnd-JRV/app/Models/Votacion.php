@@ -21,4 +21,8 @@ class Votacion extends Model
     public function solicitud(){
         return $this->belongsTo(Solicitud::class);
     }
+
+    public function acta(){
+        return $this->belongsTo(Acta::class);
+    }
 }
