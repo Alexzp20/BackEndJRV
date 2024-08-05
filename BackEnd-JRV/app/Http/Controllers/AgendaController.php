@@ -152,6 +152,18 @@ class AgendaController extends Controller
     public function update(Request $request){
         $agenda = Agenda::findOrFail($request->id);
 
+        $agenda->numero = $request['generales']['numAgenda'];
+        $agenda->convoca = $request['generales']['convoca'];
+        $agenda->fecha = $request['generales']['fechaAgenda'];
+        $agenda->lugar = $request['generales']['lugar'];
+        $agenda->primera_convocatoria = $request['generales']['primeraConvocatoria'];
+        $agenda->segunda_convocatoria = $request['generales']['segundaConvocatoria'];
+        $agenda->hora_inicio = $request['generales']['horaInicio'];
+        $agenda->hora_finalizacion=$request['generales']['horaFin'];
+        $agenda->tipoConvocatoria = $request['generales']['tipoConvocatoria'];
+        $agenda->save();
+
+
         ///////Actualizar asistencias
         $asistenciasIdsActuales = $agenda->users()->pluck('users.id')->toArray();
         $asistencias = $request->input('asistencias');
