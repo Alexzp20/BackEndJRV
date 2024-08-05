@@ -563,34 +563,47 @@ class AgendaController extends Controller
         });
 
         //Array de votaciones
-        //$votaciones = $agenda->solicitudes->map(function($solicitud) {
-            //if(is_object($solicitud->votacion)){
-                //return [
-                    //'afavor'=>$solicitud->votacion->afavor,
-                    //'contra'=>$solicitud->votacion->contra,
-                    //'abstencion'=>$solicitud->votacion->abstencion,
-                    //'total'=>$solicitud->votacion->total,
-                    //'solicitud_id'=>$solicitud->votacion->solicitud_id,
-                    //'estado'=>$solicitud->estado->id
-                //];
-            //} 
-        //});      
+        $votaciones = $agenda->solicitudes->map(function($solicitud) {
+            if(is_object($solicitud->votacion)){
+                return [
+                    'afavor'=>$solicitud->votacion->afavor,
+                    'contra'=>$solicitud->votacion->contra,
+                    'abstencion'=>$solicitud->votacion->abstencion,
+                    'total'=>$solicitud->votacion->total,
+                    'solicitud_id'=>$solicitud->votacion->solicitud_id,
+                    'estado'=>$solicitud->estado->id
+                ];
+            }
+        });
+        
+        $votacionesActas = $agenda->actas->map(function($acta){
+            if(is_object($acta->votacion)){
+                return[
+                    'afavor'=>$acta->votacion->afavor,
+                    'contra'=>$acta->votacion->contra,
+                    'abstencion'=>$acta->votacion->abstencion,
+                    'total'=>$acta->votacion->total,
+                    'solicitud_id'=>$acta->id,
+                    'estado'=>$acta->estado_acta_id
+                ];
+            }
+        });
 
         //Agrupa las solicitudes por categorias y subcategorias
-        $solicitudesAnidadas = $solicitudes->groupBy(function($solicitud) {
-            return $solicitud['categoria'];
-        })->map(function($categoriaGrupo) {
-            $subcategoriaGrupo = $categoriaGrupo->groupBy(function($solicitud) {
-                return $solicitud['subcategoria'] ?? 'sin subcategoria';
-            });
-            if($subcategoriaGrupo->has('sin subcategoria')){
-                return $subcategoriaGrupo->get('sin subcategoria');
-            }
-            return $subcategoriaGrupo;
-        }); 
+        //$solicitudesAnidadas = $solicitudes->groupBy(function($solicitud) {
+            //return $solicitud['categoria'];
+        //})->map(function($categoriaGrupo) {
+            //$subcategoriaGrupo = $categoriaGrupo->groupBy(function($solicitud) {
+                //return $solicitud['subcategoria'] ?? 'sin subcategoria';
+            //});
+            //if($subcategoriaGrupo->has('sin subcategoria')){
+                //return $subcategoriaGrupo->get('sin subcategoria');
+            //}
+            //return $subcategoriaGrupo;
+        //}); 
 
  
-        return response()->json(['generales'=>$generales,'asistencias'=>$asistencia,'actas'=>$actas,'informes'=>$informes, 'solicitudes'=>$solicitudes]);
+        return response()->json(['generales'=>$generales,'asistencias'=>$asistencia,'actas'=>$actas,'informes'=>$informes, 'solicitudes'=>$solicitudes, 'votaciones'=>$votaciones, 'votacionesActas'=>$votacionesActas]);
     }
 
 }
