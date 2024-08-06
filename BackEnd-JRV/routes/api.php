@@ -33,7 +33,7 @@ Route::post('/login',[AuthController::class,'login']);
 
 
 
-Route::group(['middleware'=>['auth:sanctum','role_or_permission:Administrador|Asistente|Unidad|Escuela']], function(){
+Route::group(['middleware'=>['auth:sanctum','role_or_permission:Administrador|Asistente|Usuario']], function(){
     //API's solicitudes
     Route::post('/solicitud',[SolicitudController::class,'store']);//crear solicitud
     Route::get('/solicitudes',[SolicitudController::class,'index']);//muestra las solicitudes del usuario

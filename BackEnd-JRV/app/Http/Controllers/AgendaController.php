@@ -463,7 +463,6 @@ class AgendaController extends Controller
                         'afavor' => $votacion['afavor'],
                         'contra' => $votacion['contra'],
                         'abstencion' => $votacion['abstencion'],
-                        //'solicitud_id'=>$votacion['solicitud_id'],
                         'total'=>$votacion['total']
                     ]);
                 }
@@ -557,7 +556,7 @@ class AgendaController extends Controller
                         'path' => $documento->path,
                     ];
                 }),
-                'votacion'=>$solicitud->votacion,
+                //'votacion'=>$solicitud->votacion,
                 'creado'=>$solicitud->created_at
             ];
         });

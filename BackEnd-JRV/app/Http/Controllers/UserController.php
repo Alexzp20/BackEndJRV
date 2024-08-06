@@ -61,8 +61,8 @@ class UserController extends Controller
         $user->puesto_id = $request->puesto_id;
         $user->save();
 
-        $role = Role::findOrFail($request->role_id);
-        $user->assignRole($role->name);
+
+        $this->asignarRole($request->puesto_id,$user);
 
         return response()->json(['user'=>$user],201);
     }
@@ -77,14 +77,45 @@ class UserController extends Controller
         $user->password = $request->password;
         $user->fecha_nacimiento = $request->fecha_nacimiento;
         $user->puesto_id = $request->puesto_id;
-        
-
         $user->save();
+
+        $this->asignarRole($request->puesto_id,$user);
+
         return $user;
     }
 
     public function destroy(Request $request){
         $user = User::destroy($request->id);
         return $user;
+    }
+
+    private function asignarRole($puesto, $user){
+
+        switch($puesto){
+            case 1:
+                $user->assignRole('Administrador');
+                break;
+            case 2:
+                $user->assignRole('Administrador');
+                break;
+            case 3:
+                $user->assignRole('Usuario');
+                break;
+            case 4:
+                $user->assignRole('Administrador');
+                break;
+            case 5:
+                $user->assignRole('Usuario');
+                break;
+            case 6:
+                $user->assignRole('Usuario');
+                break;
+            case 7:
+                $user->assignRole('Usuario');
+                break;
+            case 8:
+                $user->assignRole('Usuario');
+                break;
+        }
     }
 }

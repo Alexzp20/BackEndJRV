@@ -30,7 +30,7 @@ class StoreUserRequest extends FormRequest
             'email'=>'required|email|unique:users,email',
             'password'=>'required|confirmed',
             'fecha_nacimiento'=>'date',
-            'role_id'=>'exists:roles,id'
+            'puesto_id'=>'required|exists:puestos,id'
         ];
     }
 
@@ -44,7 +44,8 @@ class StoreUserRequest extends FormRequest
             'password.required' => 'Ingrese una contraseña',
             'password.confirmed' => 'Contraseña equivocada',
             'fecha_nacimiento.date' => 'Ingrese una fecha valida',
-            'role_id.exists'=>'Seleccione un rol valido'
+            'puesto_id.required'=>'Ingrese en puesto',
+            'puesto_id.exists'=>'Seleccione un puesto valido'
         ];
     }
 

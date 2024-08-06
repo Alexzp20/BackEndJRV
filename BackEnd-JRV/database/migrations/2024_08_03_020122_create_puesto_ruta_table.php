@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ruta_user', function (Blueprint $table) {
+        Schema::create('puesto_ruta', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('puesto_id');
             $table->unsignedBigInteger('ruta_id');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('puesto_id')->references('id')->on('puestos')->onDelete('cascade');
             $table->foreign('ruta_id')->references('id')->on('rutas')->onDelete('cascade');
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ruta_user');
+        Schema::dropIfExists('puesto_ruta');
     }
 };

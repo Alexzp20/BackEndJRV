@@ -79,13 +79,9 @@ class RoleSeeder extends Seeder
             Permission::create(['name'=> 'mostrar informes']),
 
         ]; 
-    
-
-
 
         Role::create(['name'=>'Administrador'])->givePermissionTo([$permisosAdmin, $permisosUsuario, $crudActas, $crudAcuerdo, $crudInformes]);
         Role::create(['name'=>'Asistente'])->givePermissionTo([$permisosAdmin, $permisosUsuario]);
-        Role::create(['name'=>'Escuela'])->givePermissionTo($permisosUsuario);
-        Role::create(['name'=>'Unidad'])->givePermissionTo($permisosUsuario);
+        Role::create(['name'=>'Usuario'])->givePermissionTo($permisosUsuario);
     }
 }

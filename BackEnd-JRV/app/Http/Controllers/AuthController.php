@@ -16,7 +16,7 @@ class AuthController extends Controller
         
 
         if (Auth::attempt($request->only('email','password'))){
-            $user = User::with('rutas','roles:id,name')->where('email',$request['email'])->firstOrFail();
+            $user = User::with('roles:id,name','puesto.rutas:id,ruta,titulo,ruta_imagen')->where('email',$request['email'])->firstOrFail();
             $userDatos = [
                 'id'=>$user->id,
                 'username'=>$user->username,
@@ -31,10 +31,11 @@ class AuthController extends Controller
                     ];
                 })
             ];
-            $token = $user->createToken('auth_token')->plainTextToken;
-            $rutas = $user->rutas;
+            $rutasPuesto = $user->puesto->rutas;
 
-            return response(["token"=>$token, 'rutas'=>$rutas, 'user'=>$userDatos], 200);
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return response(["token"=>$token, 'rutas'=>$rutasPuesto, 'user'=>$userDatos], 200);
         } else {
             return response('No se pudo logear', 401);
         }

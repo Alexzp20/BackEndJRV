@@ -14,16 +14,16 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         //
-        User::create(['username'=>'decano01','name'=>'Luis','apellido'=>'Barrera','email'=>'luis.barrera@gmail.com','password'=>'12345','puesto_id'=>'1'])->assignRole('Administrador')->rutas()->attach([1,2,3,4,6,7,8,9,10]);
-        User::create(['username'=>'rodrigo01','name'=>'Rodrigo','apellido'=>'Zelaya','email'=>'rodrigo@gmail.com','password'=>'12345','puesto_id'=>'3'])->assignRole('Administrador')->rutas()->attach([1,2,3,4,6,8]);
-        User::create(['username'=>'pedro02','name'=>'Pedro','apellido'=>'Zavaleta','email'=>'pedro@gmail.com','password'=>'12345','puesto_id'=>'3'])->assignRole('Asistente')->rutas()->attach([1,2,4,8]);
-        User::create(['username'=>'diegodcc','name'=>'Diego','apellido'=>'Castro','email'=>'diego@gmail.com','password'=>'12345','puesto_id'=>'3'])->assignRole('Asistente')->rutas()->attach([1,2,4,8]);
-        User::create(['username'=>'UCB','name'=>'Unidad de Ciencias Basicas','email'=>'ucb@fia.ues.edu.sv','password'=>'12345',])->assignRole('Unidad')->rutas()->attach([1,4]);
-        User::create(['username'=>'EISI','name'=>'Escuela de Ingeniería de Sistemas Informáticos','email'=>'sistemas@fia.ues.edu.sv','password'=>'12345',])->assignRole('Escuela')->rutas()->attach([1,4]);
+        User::create(['username'=>'decano01','name'=>'Luis','apellido'=>'Barrera','email'=>'luis.barrera@gmail.com','password'=>'12345','puesto_id'=>'1'])->assignRole('Administrador');
+        User::create(['username'=>'rodrigo01','name'=>'Rodrigo','apellido'=>'Zelaya','email'=>'rodrigo@gmail.com','password'=>'12345','puesto_id'=>'4'])->assignRole('Administrador');
+        User::create(['username'=>'pedro02','name'=>'Pedro','apellido'=>'Zavaleta','email'=>'pedro@gmail.com','password'=>'12345','puesto_id'=>'4'])->assignRole('Asistente');
+        User::create(['username'=>'diegodcc','name'=>'Diego','apellido'=>'Castro','email'=>'diego@gmail.com','password'=>'12345','puesto_id'=>'4'])->assignRole('Asistente');
+        User::create(['username'=>'UCB','name'=>'Unidad de Ciencias Basicas','email'=>'ucb@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'6'])->assignRole('Unidad');
+        User::create(['username'=>'EISI','name'=>'Escuela de Ingeniería de Sistemas Informáticos','email'=>'sistemas@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'5'])->assignRole('Escuela');
 
-        User::create(['username'=>'Secretaria1','name'=>'Secretario','email'=>'secretaria1@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'3'])->assignRole('Administrador')->rutas()->attach([1,2,3,4,6,7,8,9,10]);
-        User::create(['username'=>'Secretaria2','name'=>'Secretario','email'=>'secretaria2@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'3'])->assignRole('Administrador')->rutas()->attach([1,2,3,4,6,7,8,9,10]);
-        User::create(['username'=>'Secretaria3','name'=>'Secretario','email'=>'secretaria3@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'3'])->assignRole('Administrador')->rutas()->attach([1,2,3,4,6,7,8,9,10]);
-        User::create(['username'=>'Secretario','name'=>'Raul','apellido'=>'Fabian','email'=>'raul.fabian@ues.edu.sv','password'=>'12345','puesto_id'=>'3'])->assignRole('Administrador')->rutas()->attach([1,2,3,4,6,7,8,9,10]);
+        User::create(['username'=>'Secretaria1','name'=>'Secretario','email'=>'secretaria1@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'4'])->assignRole('Administrador');
+        User::create(['username'=>'Secretaria2','name'=>'Secretario','email'=>'secretaria2@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'4'])->assignRole('Administrador');
+        User::create(['username'=>'Secretaria3','name'=>'Secretario','email'=>'secretaria3@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'4'])->assignRole('Administrador');
+        User::create(['username'=>'Secretario','name'=>'Raul','apellido'=>'Fabian','email'=>'raul.fabian@ues.edu.sv','password'=>'12345','puesto_id'=>'4'])->assignRole('Administrador');
     }
 }
