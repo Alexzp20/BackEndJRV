@@ -146,6 +146,7 @@ class AgendaController extends Controller
 
     }
 
+    
     /////////////------------->>>>FUNCION PARA ACTUALIZAR AGENDA<<<<-------------///////////////
     ////////////------------------------>>>>By D.Castro<<<<---------------------///////////////
 
@@ -573,7 +574,7 @@ class AgendaController extends Controller
                     'estado'=>$solicitud->estado->id
                 ];
             }
-        });
+        })->filter()->values();
         
         $votacionesActas = $agenda->actas->map(function($acta){
             if(is_object($acta->votacion)){
@@ -582,11 +583,11 @@ class AgendaController extends Controller
                     'contra'=>$acta->votacion->contra,
                     'abstencion'=>$acta->votacion->abstencion,
                     'total'=>$acta->votacion->total,
-                    'solicitud_id'=>$acta->id,
+                    'acta_id'=>$acta->id,
                     'estado'=>$acta->estado_acta_id
                 ];
             }
-        });
+        })->filter()->values();
 
         //Agrupa las solicitudes por categorias y subcategorias
         //$solicitudesAnidadas = $solicitudes->groupBy(function($solicitud) {
