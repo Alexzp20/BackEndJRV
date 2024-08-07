@@ -86,7 +86,7 @@ class AgendaController extends Controller
                 $sol->estado_id = $votacion['estado'];
                 $sol->save();
             } else {
-                $sol->comentario_revision = $votacion['comentario'];
+                $sol->comentario_estado = $votacion['comentario'];
                 $sol->estado_id = $votacion['estado'];
                 $sol->save();
                 Votacion::create([
@@ -207,7 +207,7 @@ class AgendaController extends Controller
                 $agenda->solicitudes()->detach($id);
                 $solicitud->update([
                     'estado_id' => 6,
-                    'comentario_revision' => null,
+                    'comentario_estado' => null,
                 ]);
             } else{
                 $agenda->solicitudes()->detach($id);
@@ -407,16 +407,16 @@ class AgendaController extends Controller
                 if($votos){
                     $votos->delete();
                     $solicitud->estado_id = $votacion['estado'];
-                    $solicitud->comentario_revision = $votacion['comentario'];
+                    $solicitud->comentario_estado = $votacion['comentario'];
                     $solicitud->save();
                 } else{
                     $solicitud->estado_id = $votacion['estado'];
-                    $solicitud->comentario_revision = $votacion['comentario'];
+                    $solicitud->comentario_estado = $votacion['comentario'];
                     $solicitud->save();
                 }
             } else{
                 if($votos){
-                    $solicitud->comentario_revision = $votacion['comentario'];
+                    $solicitud->comentario_estado = $votacion['comentario'];
                     $solicitud->estado_id = $votacion['estado'];
                     $solicitud->save();
                     $votos->update([
@@ -427,7 +427,7 @@ class AgendaController extends Controller
                         'total'=>$votacion['total']
                     ]);
                 } else{
-                    $solicitud->comentario_revision = $votacion['comentario'];
+                    $solicitud->comentario_estado = $votacion['comentario'];
                     $solicitud->estado_id = $votacion['estado'];
                     $solicitud->save();
                     $solicitud->votacion()->create([
@@ -571,7 +571,8 @@ class AgendaController extends Controller
                     'abstencion'=>$solicitud->votacion->abstencion,
                     'total'=>$solicitud->votacion->total,
                     'solicitud_id'=>$solicitud->votacion->solicitud_id,
-                    'estado'=>$solicitud->estado->id
+                    'estado'=>$solicitud->estado->id,
+                    'comentario'=>$solicitud->comentario_estado
                 ];
             }
         })->filter()->values();
