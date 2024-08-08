@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
+use App\Mail\Notificacion; 
+use Illuminate\Support\Facades\Mail;
+
 class SolicitudController extends Controller
 {
     /**
@@ -107,8 +110,9 @@ class SolicitudController extends Controller
         $doc->path = 'solicitudes/' .$fileName;
         $doc->solicitud_id = $solicitud->id;
         $doc->save();
-
+        //Mail::to('zf17004@ues.edu.sv')->send(new Notificacion("Rodrigo"));
         return [$solicitud,$doc];
+        
     }
 
     /**

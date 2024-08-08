@@ -13,6 +13,9 @@ use App\Http\Controllers\SubcategoriaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Mail\Notificacion;
+use App\Http\Controllers\CorreoController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -179,3 +182,5 @@ Route::put('/agenda/{id}',[AgendaController::class,'update']);
 
 //Route::get('/puestos','App\Http\Controllers\PuestoController@index');
 //Route::get('/rols','App\Http\Controllers\RoleController@index');
+
+Route::post('/enviar-correo', [CorreoController::class, 'enviarCorreo']);
