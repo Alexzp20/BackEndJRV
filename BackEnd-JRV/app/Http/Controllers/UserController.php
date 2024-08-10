@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -67,14 +68,14 @@ class UserController extends Controller
         return response()->json(['user'=>$user],201);
     }
 
-    public function update(StoreUserRequest $request){
+    public function update(UpdateUserRequest $request){
 
         $user = User::findOrFail($request->id);
         $user->username = $request->username;
         $user->name = $request->name;
         $user->apellido = $request->apellido;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = $request->password ? $request->password: $user->password;
         $user->fecha_nacimiento = $request->fecha_nacimiento;
         $user->puesto_id = $request->puesto_id;
         $user->save();

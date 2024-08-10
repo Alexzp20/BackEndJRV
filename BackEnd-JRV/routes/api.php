@@ -81,7 +81,7 @@ Route::group(['middleware'=>['auth:sanctum','role:Administrador']], function(){
 
     //API's actas
     Route::post('acta',[ActaController::class,'create']);
-    Route::post('acta/{id}',[ActaController::class,'update']);
+    Route::put('acta/{id}',[ActaController::class,'update']);
     Route::delete('acta/{id}',[ActaController::class,'destroy']);
     Route::get('actas',[ActaController::class,'index']);
     Route::get('actasAgenda',[ActaController::class,'actasAsignacion']);
