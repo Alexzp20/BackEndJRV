@@ -29,7 +29,6 @@ class UpdateUserRequest extends FormRequest
             'name'=>'required',
             'email'=>'required|email',
             'password'=>'confirmed',
-            'fecha_nacimiento'=>'date',
             'puesto_id'=>'required|exists:puestos,id'
         ];
     }
@@ -41,7 +40,6 @@ class UpdateUserRequest extends FormRequest
             'email.required' => 'Ingrese un correo electronico',
             'email.email' => 'Ingrese un correo electronico valido',
             'password.confirmed' => 'Contraseña equivocada',
-            'fecha_nacimiento.date' => 'Ingrese una fecha valida',
             'puesto_id.required'=>'Ingrese en puesto',
             'puesto_id.exists'=>'Seleccione un puesto valido'
         ];
