@@ -20,7 +20,7 @@ class RutaSeeder extends Seeder
         Ruta::create(['ruta'=>'/buscador','titulo'=>'Buscador','ruta_imagen'=>'/images/MenuInicio/Buscador.png']);
         Ruta::create(['ruta'=>'/estadistico','titulo'=>'Estadisticos','ruta_imagen'=>'/images/MenuInicio/Estadisticos.png']);
         Ruta::create(['ruta'=>'/ajustes','titulo'=>'Ajustes','ruta_imagen'=>'/images/MenuInicio/Ajustes.png']);
-        Ruta::create(['ruta'=>'/buzon/revision','titulo'=>'Revision','ruta_imagen'=>'/images/Buzon/Revision.png']);
+        Ruta::create(['ruta'=>'/buzon/revision','titulo'=>'Revision','ruta_imagen'=>'/images/Buzon/Revision.png']);//<-------
         Ruta::create(['ruta'=>'/agenda/nueva','titulo'=>'Nueva Agenda','ruta_imagen'=>'/images/MenuInicio/Nuevo.png']);
         Ruta::create(['ruta'=>'/agenda','titulo'=>'Menu Agendas','ruta_imagen'=>'/images/MenuInicio/Nuevo.png']);
         Ruta::create(['ruta'=>'/acuerdo','titulo'=>'Acuerdos','ruta_imagen'=>'/images/MenuInicio/Acuerdo.png']);

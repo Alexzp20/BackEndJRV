@@ -24,7 +24,7 @@ class Agenda extends Model
     
     //relacion muchos a muchos con solicitudes
     public function solicitudes(){
-        return $this->belongsToMany(Solicitud::class);
+        return $this->belongsToMany(Solicitud::class)->using(AgendaSolicitud::class)->withPivot('estado_id');
     }
 
     //Relacion de muchos a muchos con la tabla agendas

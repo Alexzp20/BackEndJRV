@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('solicitud_id');
             $table->unsignedBigInteger('agenda_id');
+            $table->unsignedBigInteger('estado_id')->default(6)->nullable();
 
             $table->foreign('solicitud_id')->references('id')->on('solicitudes')->onDelete('cascade');
             $table->foreign('agenda_id')->references('id')->on('agendas')->onDelete('cascade');
+            $table->foreign('estado_id')->references('id')->on('estados')->onDelete('set null');
             $table->timestamps();
         });
     }

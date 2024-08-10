@@ -37,7 +37,7 @@ class UserController extends Controller
     }
 
     public function usersAsistencia(){
-        $users = User::whereNotNull('puesto_id')->get();
+        $users = User::whereIn('puesto_id',[1,2,3,4])->get();
         return $users;
     }
     

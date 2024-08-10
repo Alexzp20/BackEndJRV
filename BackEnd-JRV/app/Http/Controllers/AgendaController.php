@@ -187,7 +187,7 @@ class AgendaController extends Controller
         $votaciones = $request->input('votaciones');
         if(!empty($votaciones)){
             foreach($votaciones as $votacion){
-                $this->votarSolicitud($votacion);
+                $this->votarSolicitud($votacion,$agenda);
             }
         }
 
@@ -398,7 +398,7 @@ class AgendaController extends Controller
         }
     }
 
-    private function votarSolicitud($votacion){
+    private function votarSolicitud($votacion,$agenda){
 
         if(Solicitud::find($votacion['solicitud_id'])){
             $solicitud = Solicitud::find($votacion['solicitud_id']);
@@ -409,16 +409,25 @@ class AgendaController extends Controller
                     $solicitud->estado_id = $votacion['estado'];
                     $solicitud->comentario_estado = $votacion['comentario'];
                     $solicitud->save();
+                    $agenda->solicitudes()->updateExistingPivot($votacion['solicitud_id'],[
+                        'estado_id'=>$votacion['estado']
+                    ]);
                 } else{
                     $solicitud->estado_id = $votacion['estado'];
                     $solicitud->comentario_estado = $votacion['comentario'];
                     $solicitud->save();
+                    $agenda->solicitudes()->updateExistingPivot($votacion['solicitud_id'],[
+                        'estado_id'=>$votacion['estado']
+                    ]);
                 }
             } else{
                 if($votos){
                     $solicitud->comentario_estado = $votacion['comentario'];
                     $solicitud->estado_id = $votacion['estado'];
                     $solicitud->save();
+                    $agenda->solicitudes()->updateExistingPivot($votacion['solicitud_id'],[
+                        'estado_id'=>$votacion['estado']
+                    ]);
                     $votos->update([
                         'afavor' => $votacion['afavor'],
                         'contra' => $votacion['contra'],
@@ -430,6 +439,9 @@ class AgendaController extends Controller
                     $solicitud->comentario_estado = $votacion['comentario'];
                     $solicitud->estado_id = $votacion['estado'];
                     $solicitud->save();
+                    $agenda->solicitudes()->updateExistingPivot($votacion['solicitud_id'],[
+                        'estado_id'=>$votacion['estado']
+                    ]);
                     $solicitud->votacion()->create([
                         'afavor' => $votacion['afavor'],
                         'contra' => $votacion['contra'],
@@ -505,6 +517,10 @@ class AgendaController extends Controller
 
     public function showAcuerdos($id){
         $agenda = Agenda::with([
+            'solicitudes' => function ($query) {
+                $query->wherePivot('estado_id', 4)
+                ->orWherePivot('estado_id', 5);
+            },
             'solicitudes.documentos',
             'solicitudes.acuerdos'
         ])->findOrFail($id);
@@ -540,6 +556,7 @@ class AgendaController extends Controller
         ->where('agenda_user.agenda_id',$request->id)
         ->get();
 
+        $solicitudesss = $agenda->solicitudes;
         //Da el formato neesario a los arrays de cada solicitud
         $solicitudes = $agenda->solicitudes->map(function($solicitud){
             return [
@@ -550,7 +567,8 @@ class AgendaController extends Controller
                 'categoria'=>$solicitud->categoria->name,
                 'subcategoria_id'=>$solicitud->subcategoria ? $solicitud->subcategoria->id :null,
                 'subcategoria'=>$solicitud->subcategoria ? $solicitud->subcategoria->name :null,
-                'estado'=>$solicitud->estado->name,
+                'estado_general'=>$solicitud->estado->name,
+                'estado'=>$solicitud->pivot->estado->name,
                 'documentos' => $solicitud->documentos->map(function($documento) {
                     return [
                         'id' => $documento->id,
