@@ -61,6 +61,7 @@ Route::group(['middleware'=>['auth:sanctum','role_or_permission:Administrador|As
     Route::get('/agenda/{id}',[AgendaController::class,'show']);//mostrar agenda su id
 
     Route::get('/logout', [AuthController::class, 'logout']);
+    Route::get('/perfil',[UserController::class, 'perfil']);
 });
 
 
@@ -81,7 +82,7 @@ Route::group(['middleware'=>['auth:sanctum','role:Administrador']], function(){
 
     //API's actas
     Route::post('acta',[ActaController::class,'create']);
-    Route::put('acta/{id}',[ActaController::class,'update']);
+    Route::post('acta/{id}',[ActaController::class,'update']);
     Route::delete('acta/{id}',[ActaController::class,'destroy']);
     Route::get('actas',[ActaController::class,'index']);
     Route::get('actasAgenda',[ActaController::class,'actasAsignacion']);
@@ -184,3 +185,5 @@ Route::put('/agenda/{id}',[AgendaController::class,'update']);
 //Route::get('/rols','App\Http\Controllers\RoleController@index');
 
 Route::post('/enviar-correo', [CorreoController::class, 'enviarCorreo']);
+
+Route::post('/activarUser/{id}',[UserController::class, 'activarUser']);

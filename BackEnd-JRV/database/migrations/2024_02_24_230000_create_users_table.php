@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('apellido')->nullable();
             $table->string('email')->unique();
             $table->string('password');
-            $table->date('fecha_nacimiento')->nullable();
+            $table->boolean('activo')->default(true);
             $table->unsignedBigInteger('puesto_id')->nullable();
             $table->rememberToken();
            

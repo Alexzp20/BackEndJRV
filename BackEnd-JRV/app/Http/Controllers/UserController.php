@@ -26,9 +26,24 @@ class UserController extends Controller
 
     public function index(){
 
-        $users = User::all();
-        return $users;
-            
+        $users = User::with('puesto')->get();
+        return response()->json($users->map(function($user){
+            return[
+                'id'=>$user->id,
+                'username'=>$user->username,
+                'name'=>$user->name,
+                'apellido'=>$user->apellido,
+                'email'=>$user->email,
+                'activo'=>$user->activo,
+                'puesto_id'=>$user->puesto_id,
+                'puesto_name'=>$user->puesto->name
+            ];
+        }));     
+    }
+
+    public function perfil(){
+       $user = auth()->user();
+       return $user;
     }
 
     public function show(Request $request){
@@ -38,7 +53,7 @@ class UserController extends Controller
     }
 
     public function usersAsistencia(){
-        $users = User::whereIn('puesto_id',[1,2,3,4])->get();
+        $users = User::active()->whereIn('puesto_id',[1,2,3,4])->get();
         return $users;
     }
     
@@ -86,6 +101,19 @@ class UserController extends Controller
     public function destroy(Request $request){
         $user = User::destroy($request->id);
         return $user;
+    }
+
+    public function activarUser($id){
+        $user = User::findOrFail($id);
+        if ($user->activo == true){
+            $user->activo = false;
+            $user->save();
+            return response()->json(['Usuario desactivado'],201);
+        } else {
+            $user->activo = true;
+            $user->save();
+            return response()->json(['Usuario activado'],201);
+        }
     }
 
     private function asignarRole($puesto, $user){

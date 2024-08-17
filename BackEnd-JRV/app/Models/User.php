@@ -66,4 +66,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Ruta::class);
     }
 
+    public function scopeActive($query){
+        return $query->where('activo', true);
+    }
+
 }
