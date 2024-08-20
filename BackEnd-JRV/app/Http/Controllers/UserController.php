@@ -42,8 +42,17 @@ class UserController extends Controller
     }
 
     public function perfil(){
-       $user = auth()->user();
-       return $user;
+       $user = auth()->user()->load('puesto');
+       return[
+        'id'=>$user->id,
+        'username'=>$user->username,
+        'name'=>$user->name,
+        'apellido'=>$user->apellido,
+        'email'=>$user->email,
+        'activo'=>$user->activo,
+        'puesto_id'=>$user->puesto_id,
+        'puesto_name'=>$user->puesto->name
+       ];
     }
 
     public function show(Request $request){
@@ -85,6 +94,21 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request){
 
         $user = User::findOrFail($request->id);
+        $user->username = $request->username;
+        $user->name = $request->name;
+        $user->apellido = $request->apellido;
+        $user->email = $request->email;
+        $user->password = $request->password ? $request->password: $user->password;
+        $user->puesto_id = $request->puesto_id;
+        $user->save();
+
+        $this->asignarRole($request->puesto_id,$user);
+
+        return $user;
+    }
+
+    public function updatePerfil(UpdateUserRequest $request){
+        $user = auth()->user();
         $user->username = $request->username;
         $user->name = $request->name;
         $user->apellido = $request->apellido;
