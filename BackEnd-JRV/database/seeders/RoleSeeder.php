@@ -30,58 +30,60 @@ class RoleSeeder extends Seeder
             Permission::create(['name'=> 'mostrar idAgenda']),
         ];
 
-        $permisosAdmin = [
+        $permisosAsistente = [
             
+            //permisos solicitudes
             Permission::create(['name'=> 'revisar solicitud']),
-            Permission::create(['name'=> 'editar Asistentes']),
+            Permission::create(['name'=> 'editar solicitud']),
+            
+            //permisos usuarios
             Permission::create(['name'=> 'mostrar Usuarios']),
-            Permission::create(['name'=> 'mostrar UsuAsistencia']),
-            Permission::create(['name'=> 'mostrar PuestoU']),
             Permission::create(['name'=> 'crear usuario']),
             Permission::create(['name'=> 'actualizar usuario']),
-            Permission::create(['name'=> 'borrar usuario']),
-            Permission::create(['name'=> 'crear Categoria']),
-            Permission::create(['name'=> 'crear SubCategoria']),
+            
+            //permisos agenda
+            Permission::create(['name'=> 'mostrar UsuAsistencia']),
             Permission::create(['name'=> 'crear Agenda']),
             Permission::create(['name'=> 'mostrar idAcuerdo']),
             Permission::create(['name'=> 'mostrar Puesto']),
             Permission::create(['name'=> 'mostrar Rol']),
+            Permission::create(['name'=> 'actualizar agenda']),
 
-        ];
-        
-        
-        //Crud de actas 
-        $crudActas = [
+            //permisos actas
             Permission::create(['name'=> 'crear acta']),
             Permission::create(['name'=> 'actualizar acta']),
             Permission::create(['name'=> 'borrar acta']),
             Permission::create(['name'=> 'mostrar acta']),
             Permission::create(['name'=> 'asignar Acta']),
-        ];
 
-
-        //crud de Acuerdos
-        $crudAcuerdo = [
+            //permisos acuerdos
             Permission::create(['name'=> 'crear Acuerdo']),
             Permission::create(['name'=> 'actualizar Acuerdo']),
             Permission::create(['name'=> 'borrar Acuerdo']),
             Permission::create(['name'=> 'mostrar Acuerdo']),
-        ];
-        
-        //
 
-        //crud de Informes
-        $crudInformes = [
+            //permisos informes
             Permission::create(['name'=> 'crear informes']),
             Permission::create(['name'=> 'actualizar informes']),
             Permission::create(['name'=> 'eliminar informes']),
             Permission::create(['name'=> 'asignar informes']),
             Permission::create(['name'=> 'mostrar informes']),
+            Permission::create(['name'=> 'remitente'])
 
-        ]; 
+        ];
 
-        Role::create(['name'=>'Administrador'])->givePermissionTo([$permisosAdmin, $permisosUsuario, $crudActas, $crudAcuerdo, $crudInformes]);
-        Role::create(['name'=>'Asistente'])->givePermissionTo([$permisosAdmin, $permisosUsuario]);
+        $permisosAdministrador = [
+            Permission::create(['name'=> 'borrar usuario']),
+            Permission::create(['name'=> 'crear Categoria']),
+            Permission::create(['name'=> 'crear SubCategoria']),
+            Permission::create(['name'=> 'publicar agenda']),
+        ];
+        
+    
+
+
+        Role::create(['name'=>'Administrador'])->givePermissionTo([$permisosAsistente, $permisosUsuario, $permisosAdministrador]);
+        Role::create(['name'=>'Asistente'])->givePermissionTo([$permisosAsistente, $permisosUsuario]);
         Role::create(['name'=>'Usuario'])->givePermissionTo($permisosUsuario);
     }
 }

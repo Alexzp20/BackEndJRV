@@ -58,7 +58,8 @@ Route::group(['middleware'=>['auth:sanctum','role_or_permission:Administrador|As
 
     //API's agenda
     Route::get('/agendas',[AgendaController::class,'index']);//mostrar agendas
-    Route::get('/agenda/{id}',[AgendaController::class,'show']);//mostrar agenda su id
+    Route::get('/agenda/{id}',[AgendaController::class,'show']);//mostrar agenda por su id
+    Route::get('/indexPublicadas',[AgendaController::class,'indexPublicadas']);//mostrar agendas publicadas
 
     Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/perfil',[UserController::class, 'perfil']);
@@ -66,10 +67,11 @@ Route::group(['middleware'=>['auth:sanctum','role_or_permission:Administrador|As
 });
 
 
-Route::group(['middleware'=>['auth:sanctum','role:Administrador']], function(){
+Route::group(['middleware'=>['auth:sanctum','role_or_permission:Administrador|Asistente']], function(){
+    
     //API's solicitudes
     Route::put('/revision',[SolicitudController::class,'revision']);//Revisar solicitud
-    Route::put('/solicitud/edit/{id}',[SolicitudController::class,'editAsistentes']);//Editar solicitud
+    Route::put('/solicitud/edit/{id}',[SolicitudController::class,'editar']);//Editar solicitud
     Route::get('/solicitudesAsignacion',[SolicitudController::class,'solicitudesAsignacion']);
 
     //API's usuarios
@@ -79,7 +81,6 @@ Route::group(['middleware'=>['auth:sanctum','role:Administrador']], function(){
     Route::get('/user/{id}','App\Http\Controllers\UserController@show');//muestra usuario con id
     Route::post('/user',[UserController::class,'store']);//crear usuario
     Route::put('/users/{id}',[UserController::class,'update']);//Actualizar usuario
-    Route::delete('/user/{id}',[UserController::class,'destroy']);//borrar usuario
     Route::post('/activarUser/{id}',[UserController::class, 'activarUser']);//activar/desactivar usuario
 
     //API's actas
@@ -100,23 +101,30 @@ Route::group(['middleware'=>['auth:sanctum','role:Administrador']], function(){
     Route::delete('informe/{id}',[InformeController::class,'destroy']);
     Route::get('informesAgenda',[InformeController::class,'informeAsignar']);
     Route::get('informes',[InformeController::class, 'index']);
+    Route::get('/remitentes',[InformeController::class,'remitente']);
 
-    Route::post('/categoria','App\Http\Controllers\CategoriaController@store');//crear categoria
-    Route::post('/subcategoria','App\Http\Controllers\SubcategoriaController@store');//crear subcategoria
-
+    
     //API's agendas
-    Route::post('/agenda','App\Http\Controllers\AgendaController@store');
+    Route::post('/agenda',[AgendaController::class,'store']);
     Route::get('/agenda/acuerdos/{id}',[AgendaController::class,'showAcuerdos']);
+    Route::put('/agenda/{id}',[AgendaController::class,'update']);
+    
 
     Route::get('/puestos','App\Http\Controllers\PuestoController@index');
     Route::get('/rols','App\Http\Controllers\RoleController@index');
 
 });
 
-Route::post('/publicarAgenda/{id}',[AgendaController::class,'publicar']);
-Route::get('/indexPublicadas',[AgendaController::class,'indexPublicadas']);
-Route::get('/remitentes',[InformeController::class,'remitente']);
-Route::put('/agenda/{id}',[AgendaController::class,'update']);
+Route::group(['middleware'=>['auth:sanctum','role_or_permission:Administrador']], function(){
+
+    Route::delete('/user/{id}',[UserController::class,'destroy']);//borrar usuario
+    
+    Route::post('/publicarAgenda/{id}',[AgendaController::class,'publicar']);//publica la agenda
+
+    Route::post('/categoria','App\Http\Controllers\CategoriaController@store');//crear categoria
+    Route::post('/subcategoria','App\Http\Controllers\SubcategoriaController@store');//crear subcategoria
+
+});
 
 
 Route::post('/enviar-correo', [CorreoController::class, 'enviarCorreo']);

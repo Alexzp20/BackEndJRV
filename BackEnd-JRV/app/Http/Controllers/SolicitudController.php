@@ -27,7 +27,7 @@ class SolicitudController extends Controller
         $this->middleware('permission:crear solicitud',['only'=>['store']]);
         $this->middleware('permission:endpoints solicitud',['only'=>['index']]);
         $this->middleware('permission:estado solicitud',['only'=>['indexEstado']]);
-        $this->middleware('permission:editar Asistentes',['only'=>['editAsistentes']]);
+        $this->middleware('permission:editar solicitud',['only'=>['editar']]);
     }
 
 
@@ -118,7 +118,7 @@ class SolicitudController extends Controller
     /**
      * Display the specified resource.
      */
-    public function editAsistentes(SolicitudEditRevisionRequest $request)
+    public function editar(SolicitudEditRevisionRequest $request)
     {
         //
         try {

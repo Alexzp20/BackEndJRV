@@ -24,6 +24,8 @@ class AgendaController extends Controller
         $this->middleware('permission:crear Agenda',['only'=>['store']]);
         $this->middleware('permission:mostrar idAgenda',['only'=>['show']]);
         $this->middleware('permission:mostrar idAcuerdo',['only'=>['showAcuerdos']]);
+        $this->middleware('permission:publicar agenda',['only'=>['publicar']]);
+        $this->middleware('permission:actualizar agenda',['only'=>['update']]);
     }
     //
     public function index(){

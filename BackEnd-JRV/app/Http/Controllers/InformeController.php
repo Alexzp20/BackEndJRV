@@ -17,10 +17,11 @@ class InformeController extends Controller
     {
         $this->middleware('permission:crear informes',['only'=>['create']]);
         $this->middleware('permission:actualizar informes',['only'=>['update']]);
-        $this->middleware('permission:borrar informes',['only'=>['destroy']]);
+        $this->middleware('permission:eliminar informes',['only'=>['destroy']]);
         $this->middleware('permission:asignar informes',['only'=>['informeAsignar']]);
         $this->middleware('permission:mostrar informes',['only'=>['index']]);
         $this->middleware('permission:descargar informes',['only'=>['descargar']]);
+        $this->middleware('permission:remitente',['only'=>['remitente']]);
     }
     //
     public function index(){
