@@ -39,11 +39,32 @@ class UserSeeder extends Seeder
         User::create(['username'=>'diegodcc','name'=>'Diego','apellido'=>'Castro','email'=>'diego@gmail.com','password'=>'12345','puesto_id'=>'4'])->assignRole('Asistente');
         
         
-        User::create(['username'=>'UCB','name'=>'Unidad de Ciencias Basicas','email'=>'ucb@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'6'])->assignRole('Usuario');
-        User::create(['username'=>'EISI','name'=>'Escuela de Ingeniería de Sistemas Informáticos','email'=>'sistemas@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'5'])->assignRole('Usuario');
-        User::create(['username'=>'UVE','name'=>'Unidad de Vida Estudiantil','email'=>'vidaestudiantil@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'6'])->assignRole('Usuario');
+        User::create(['username'=>'decanato','name'=>'Decanato FIA','email'=>'decanato@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'7'])->assignRole('Usuario');
+        User::create(['username'=>'vicedecanato','name'=>'Vicedecanato FIA','email'=>'vicedecanato@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'7'])->assignRole('Usuario');
+        User::create(['username'=>'CTA FIA','name'=>'Comite Tecnico Asesor FIA','email'=>'comite.tecnico@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'6'])->assignRole('Usuario');
+        User::create(['username'=>'DGPG','name'=>'Dirección General de Procesos de Graduación','email'=>'trabajos.graduacion@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'6'])->assignRole('Usuario');
+        User::create(['username'=>'administracionFIA','name'=>'Administracion General FIA','email'=>'administracion.general@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'7'])->assignRole('Usuario');
+        User::create(['username'=>'academicaFIA','name'=>'Administracion Academica FIA','email'=>'academica1.ingenieria@ues.edu.sv','password'=>'12345','puesto_id'=>'7'])->assignRole('Usuario');
+        User::create(['username'=>'planificacionFIA','name'=>'Unidad de Planificacion FIA','email'=>'planificacion@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'6'])->assignRole('Usuario');
         User::create(['username'=>'Proyeccion social','name'=>'Unidad de Proyección Social','email'=>'proyeccionsocial@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'6'])->assignRole('Usuario');
+        User::create(['username'=>'FIA-NET','name'=>'FIA-NET','email'=>'fianet@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'6'])->assignRole('Usuario');
+        User::create(['username'=>'biblioteca','name'=>'Biblioteca FIA','email'=>'biblioteca@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'6'])->assignRole('Usuario');
+        User::create(['username'=>'CIAN','name'=>'CIAN','email'=>'cian@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'6'])->assignRole('Usuario');
+        User::create(['username'=>'UMS-FIA','name'=>'Unidad de Mantenimiento y Servicios FIA','email'=>'mantenimiento@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'6'])->assignRole('Usuario');
+        User::create(['username'=>'investigacionFIA','name'=>'Unidad de Investigación FIA','email'=>'investigaciones@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'6'])->assignRole('Usuario');
+        User::create(['username'=>'EIC','name'=>'Escuela de Ingeniería Civil','email'=>'civil@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'5'])->assignRole('Usuario');
+        User::create(['username'=>'EII','name'=>'Escuela de Ingeniería Industrial','email'=>'industrial@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'5'])->assignRole('Usuario');
+        User::create(['username'=>'EIM','name'=>'Escuela de Ingeniería Mecánica','email'=>'mecanica@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'5'])->assignRole('Usuario');
+        User::create(['username'=>'EIE','name'=>'Escuela de Ingeniería Eléctrica','email'=>'electrica@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'5'])->assignRole('Usuario');
+        User::create(['username'=>'EIQ','name'=>'Escuela de Ingeniería Química','email'=>'ingenieria.quimica@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'5'])->assignRole('Usuario');
         User::create(['username'=>'Arquitectura','name'=>'Escuela de Arquitectura','email'=>'arquitectura@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'5'])->assignRole('Usuario');
+        User::create(['username'=>'EISI','name'=>'Escuela de Ingeniería de Sistemas Informáticos','email'=>'sistemas@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'5'])->assignRole('Usuario');
+        User::create(['username'=>'EP','name'=>'Escuela de Posgrado','email'=>'uposgrados@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'5'])->assignRole('Usuario');
+        User::create(['username'=>'UCB','name'=>'Unidad de Ciencias Basicas','email'=>'ucb@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'6'])->assignRole('Usuario');
+        User::create(['username'=>'UAIP','name'=>'Enlace de Unidad de Acceso a la Información Pública','email'=>'enlace.uaip@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'6'])->assignRole('Usuario');
+        User::create(['username'=>'CGDA','name'=>'Coordinación de Gestión Documental y Archivo','email'=>'Ugda.fia@ues.edu.sv','password'=>'12345','puesto_id'=>'6'])->assignRole('Usuario');
+        User::create(['username'=>'UVE','name'=>'Unidad de Vida Estudiantil','email'=>'vidaestudiantil@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'6'])->assignRole('Usuario');
+    
 
 
         User::create(['username'=>'Secretaria1','name'=>'Secretario','email'=>'secretaria1@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'4'])->assignRole('Administrador');
