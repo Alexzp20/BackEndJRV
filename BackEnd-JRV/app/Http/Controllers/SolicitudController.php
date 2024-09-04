@@ -15,6 +15,7 @@ use Illuminate\Validation\ValidationException;
 
 use App\Mail\Notificacion; 
 use Illuminate\Support\Facades\Mail;
+use App\Models\User;
 
 class SolicitudController extends Controller
 {
@@ -53,13 +54,20 @@ class SolicitudController extends Controller
     //Metodo para la revision de las solicitudes
     public function revision(RevisionSolRequest $request){
 
-        $sol = Solicitud::findOrFail($request->id);
+        $sol = Solicitud::with('user')->findOrFail($request->id);
         $sol->estado_id = $request->estado;
         $sol->comentario_revision = $request->comentario;
         $sol->save();
 
-        $message = $request->estado == 2? 'Solicitud aprobada' : 'Solicitud denegada';
 
+        if($request->estado == 3){
+            //Mail::to($sol->user->email)->send(new Notificacion($sol->user->name,'emails.emailRechazar'));
+
+            $message ='Solicitud denegada';
+            return response()->json($message,200);
+        }
+        //$message = $request->estado == 2? 'Solicitud aprobada' : 'Solicitud denegada';
+        $message ='Solicitud aprobada';
         return response()->json($message,200);
     }
 
@@ -93,6 +101,7 @@ class SolicitudController extends Controller
      */
     public function store(StoreSolicitudRequest $request)
     {
+        $correos=User::where('puesto_id',4)->get();
         $fileName = time().'.'.$request->file->extension();
         //
         $solicitud = new Solicitud();
@@ -110,7 +119,11 @@ class SolicitudController extends Controller
         $doc->path = 'solicitudes/' .$fileName;
         $doc->solicitud_id = $solicitud->id;
         $doc->save();
-        //Mail::to('zf17004@ues.edu.sv')->send(new Notificacion("Rodrigo"));
+        
+        /*foreach($correos as $correo){
+        Mail::to($correo->email)->send(new Notificacion($correo));
+        }*/
+        
         return [$solicitud,$doc];
         
     }

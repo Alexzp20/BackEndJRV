@@ -11,36 +11,44 @@ use Illuminate\Queue\SerializesModels;
 
 class Notificacion extends Mailable
 {
-    public $name;
+    public $details;
+    public $viewName;
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($name)
+    public function __construct($details, $viewName)
     {
-        $this->name = $name;
+        $this->details = $details;
+        $this->viewName = $viewName;
     }
 
     /**
      * Get the message envelope.
      */
-    public function envelope(): Envelope
+    /*public function envelope(): Envelope
     {
         return new Envelope(
             subject: 'Notificacion',
         );
+    }*/
+    public function build()
+    {
+        return $this->subject('Notificacion')
+                    ->view($this->viewName);
     }
-
     /**
      * Get the message content definition.
      */
-    public function content(): Content
+    /*public function content(): Content
     {
         return new Content(
             view: 'emails.email',
+            view: 'emails.emailAprobado',
+            view: 'emails.emailRechazar',
         );
-    }
+    }*/
 
     /**
      * Get the attachments for the message.

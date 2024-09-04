@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+use App\Models\Solicitud;
+use App\Mail\Notificacion; 
+use Illuminate\Support\Facades\Mail;
+
+
 class AcuerdoController extends Controller
 {   
     function __construct()
@@ -27,6 +32,8 @@ class AcuerdoController extends Controller
 
     public function create (CreateAcuerdoRequest $request){
 
+        
+
         $fileName = $request->codigoAcuerdo.time().'.'.$request->documentoAcuerdo->extension();
         $request->documentoAcuerdo->storeAs('acuerdos',$fileName);
 
@@ -35,8 +42,11 @@ class AcuerdoController extends Controller
         $acuerdo->path = 'acuerdos/'.$fileName;
         $acuerdo->solicitud_id = $request->solicitud;
         $acuerdo->save();
-
+    
+        /*$sol = Solicitud::with('user')->findOrFail($acuerdo->solicitud_id);
+        Mail::to($sol->user->email)->send(new Notificacion($sol->user->name,'emails.emailAprobado'));*/
         return response()->json(['acuerdo'=>$acuerdo]);
+
     }
 
     public function update(UpdateAcuerdoRequest $request){

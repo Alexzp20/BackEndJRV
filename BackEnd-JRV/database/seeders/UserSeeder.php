@@ -34,9 +34,9 @@ class UserSeeder extends Seeder
         User::create(['username'=>'junta11','name'=>'Pablo Alfredo','apellido'=>'Monterrosa Valle','email'=>'mv20038@ues.edu.sv', 'password'=>'12345','puesto_id'=>'3'])->assignRole('Usuario');
         
         
-        User::create(['username'=>'rodrigo01','name'=>'Rodrigo','apellido'=>'Zelaya','email'=>'rodrigo@gmail.com','password'=>'12345','puesto_id'=>'4'])->assignRole('Administrador');
-        User::create(['username'=>'pedro02','name'=>'Pedro','apellido'=>'Zavaleta','email'=>'pedro@gmail.com','password'=>'12345','puesto_id'=>'4'])->assignRole('Asistente');
-        User::create(['username'=>'diegodcc','name'=>'Diego','apellido'=>'Castro','email'=>'diego@gmail.com','password'=>'12345','puesto_id'=>'4'])->assignRole('Asistente');
+        User::create(['username'=>'rodrigo01','name'=>'Rodrigo','apellido'=>'Zelaya','email'=>'zf17004@ues.edu.sv','password'=>'12345','puesto_id'=>'4'])->assignRole('Administrador');
+        User::create(['username'=>'pedro02','name'=>'Pedro','apellido'=>'Zavaleta','email'=>'zp19013@ues.edu.sv','password'=>'12345','puesto_id'=>'4'])->assignRole('Asistente');
+        User::create(['username'=>'diegodcc','name'=>'Diego','apellido'=>'Castro','email'=>'cc17018@ues.edu.sv','password'=>'12345','puesto_id'=>'4'])->assignRole('Asistente');
         
         
         User::create(['username'=>'decanato','name'=>'Decanato FIA','email'=>'decanato@fia.ues.edu.sv','password'=>'12345','puesto_id'=>'7'])->assignRole('Usuario');
