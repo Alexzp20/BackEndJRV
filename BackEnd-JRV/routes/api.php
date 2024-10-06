@@ -110,6 +110,7 @@ Route::group(['middleware'=>['auth:sanctum','role_or_permission:Administrador|As
     Route::post('/agenda',[AgendaController::class,'store']);
     Route::get('/agenda/acuerdos/{id}',[AgendaController::class,'showAcuerdos']);
     Route::put('/agenda/{id}',[AgendaController::class,'update']);
+    Route::delete('/agenda/{id}',[AgendaController::class,'delete']);
     
 
     Route::get('/puestos','App\Http\Controllers\PuestoController@index');

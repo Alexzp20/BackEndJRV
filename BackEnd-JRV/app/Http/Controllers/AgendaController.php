@@ -627,4 +627,18 @@ class AgendaController extends Controller
         return response()->json(['generales'=>$generales,'asistencias'=>$asistencia,'actas'=>$actas,'informes'=>$informes, 'solicitudes'=>$solicitudes, 'votaciones'=>$votaciones, 'votacionesActas'=>$votacionesActas]);
     }
 
+    public function delete(string $id){
+        try{
+            $agenda = Agenda::findOrFail($id);
+        if($agenda->publicada == false){
+            $agenda->delete();
+            return response()->json(['message' => 'Agenda eliminada'], 200);
+        }
+        return response()->json(['message' => 'Las agendas publicadas no se pueden eliminar'], 200);
+        } catch (ModelNotFoundException $e){
+            return response()->json($e->getMessage());
+        }
+        
+    }
+
 }
