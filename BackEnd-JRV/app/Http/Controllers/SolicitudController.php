@@ -31,6 +31,25 @@ class SolicitudController extends Controller
         $this->middleware('permission:editar solicitud',['only'=>['editar']]);
     }
 
+    public function indexTodas(){
+        $solicitudes = Solicitud::with('categoria','subcategoria','estado','documentos','acuerdos')->orderBy('created_at','desc')->get();
+
+        return response()->json($solicitudes->map(function($solicitud){
+            return[
+                'id'=> $solicitud->id,
+                'codigo'=>$solicitud->codigo,
+                'descripcion'=>$solicitud->descripcion,
+                'categoria'=>$solicitud->categoria->name,
+                'subcategoria'=>$solicitud->subcategoria ? $solicitud->subcategoria->name :null,
+                'estado'=>$solicitud->estado->name,
+                'creado'=>$solicitud->created_at,
+                'comentario'=>$solicitud->comentario_revision,
+                'acuerdo'=>$solicitud->acuerdos,
+                'documentos'=>$solicitud->documentos
+            ];
+        }));
+
+    }
 
     public function index()
     {

@@ -26,8 +26,17 @@ class AcuerdoController extends Controller
     }
     //
     public function index() {
-        $acuerdos = Acuerdo::all();
-        return $acuerdos;
+        $acuerdos = Acuerdo::with('solicitud')->orderBy('created_at','desc')->get();
+        return response()->json($acuerdos->map(function($acuerdo){
+            return[
+                'id_solicitud'=>$acuerdo->solicitud->id,
+                'codigo_solicitud'=>$acuerdo->solicitud->codigo,
+                'descripcion'=>$acuerdo->solicitud->descripcion,
+                'codigo_acuerdo'=>$acuerdo->codigo,
+                'id_acuerdo'=>$acuerdo->id
+            ];
+        }));
+        //return $acuerdos
     }
 
     public function create (CreateAcuerdoRequest $request){

@@ -43,12 +43,14 @@ Route::group(['middleware'=>['auth:sanctum','role_or_permission:Administrador|As
     Route::get('/solicitudes/estado/{id}',[SolicitudController::class, 'indexEstado']);//muestra las solicitudes con cierto estado
     Route::delete('/solicitud/{id}',[SolicitudController::class,'destroy']);//Eliminar solicitud
     Route::get('/solicitud/doc/{id}',[DocSolicitudController::class,'descargar']);//descargar el doc de la solicitud
+    Route::get('/todasSolicitudes',[SolicitudController::class,'indexTodas']);
 
     //API's actas
     Route::get('/acta/doc/{id}',[ActaController::class,'descargar']);//descargar doc de la acta
 
     //crud acuerdos
     Route::get('/acuerdo/doc/{id}',[AcuerdoController::class,'descargar']);
+    Route::get('/acuerdos',[AcuerdoController::class,'index']);
 
     //crud informes
     Route::get('/informe/doc/{id}',[InformeController::class,'descargar']);

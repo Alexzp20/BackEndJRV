@@ -62,7 +62,7 @@ class UserController extends Controller
     }
 
     public function usersAsistencia(){
-        $users = User::active()->whereIn('puesto_id',[1,2,3,4])->get();
+        $users = User::active()->whereIn('puesto_id',[1,2,3])->get();
         return $users;
     }
     
