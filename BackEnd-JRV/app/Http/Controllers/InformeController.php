@@ -75,7 +75,7 @@ class InformeController extends Controller
             $request->documentoInforme->storeAs('informes',$fileName);
             $informe->codigo = $request->codigoInforme;
             $informe->remitente = $request->remitente;
-            $informe->path = 'informe/'.$fileName;
+            $informe->path = 'informes/'.$fileName;
             $informe->save();
         }
         return response()->json(['informe'=>$informe],201);
